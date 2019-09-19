@@ -8,14 +8,10 @@ const Background = styled.body`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: black;
-  color: white;
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({theme}) => theme.colors.textPrimary};
 `
 
-const Home = () => (
-  <Background>
-    record app
-  </Background>
-)
+const Home = () => <Background>record app</Background>
 
 export default Home
