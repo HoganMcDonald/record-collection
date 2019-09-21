@@ -1,3 +1,5 @@
+import Typography from 'typography'
+
 const theme = {
   colors: {
     background: '#121212',
@@ -10,6 +12,25 @@ const theme = {
     textPrimary: '#e2e2e2',
     textSecondary: '#9b9b9b',
   },
+  typography: {
+    baseFontSize: '16px',
+    baseLineHeight: 1.666,
+    headerFontFamily: [
+      'Avenir Next',
+      'Helvetica Neue',
+      'Segoe UI',
+      'Helvetica',
+      'Arial',
+      'sans-serif',
+    ],
+    bodyFontFamily: ['Helvetica', 'Arial', 'sans-serif'],
+    googleFonts: [
+      { name: 'Open Sans', styles: ['600', '600i'] },
+      { name: 'Rubik', styles: ['400', '400i'] },
+    ],
+  },
 }
+
+export const typography = new Typography(theme.typography)
 
 export default theme
