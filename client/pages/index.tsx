@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 
 import SpotifyLogo from '../components/SpotifyLogo'
 import Button from '../components/Button'
@@ -28,7 +28,9 @@ const SignInButton = styled(Button)`
 const Home = () => (
   <Background>
     <h1>Log in to get started.</h1>
-    <SignInButton label="Log in sith Spotify">
+    <SignInButton
+      label="Log in with Spotify"
+      href={'http://localhost:3001/auth/spotify'}>
       <SignInLogo />
       Log in with Spotify
     </SignInButton>
