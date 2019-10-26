@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import SpotifyLogo from '../components/SpotifyLogo'
 import Button from '../components/Button'
-import { get } from '../lib/apiHelpers'
+import { useApiRequests } from '../lib/apiHelpers'
 import { AuthToken } from '../types'
 import { isEnv } from '../lib/helpers'
 import { useAuth } from '../reducers/auth'
@@ -38,6 +38,7 @@ const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
   const titleText = 'Log in to get started.'
   const [title, setTitle] = React.useState('')
   const { setAuthToken } = useAuth()
+  const { get } = useApiRequests()
 
   React.useEffect(() => {
     if (isEnv('client') && window.location.search) {
@@ -87,6 +88,7 @@ Home.getInitialProps = async ({
     client,
     expiry,
     'access-token': accessToken,
+    'token-type': 'Bearer',
   }
 
   return { authToken }

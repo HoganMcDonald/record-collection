@@ -1,14 +1,46 @@
 import fetch from 'isomorphic-unfetch'
 
-export class UnauthorizedError extends Error {}
+import { AuthToken } from '../types'
+import { apiUrl } from '../constants'
+import { useAuth } from '../reducers/auth'
 
-const parseResponse = response => response.json()
+export const useApiRequests = () => {
+  const { clearAuthToken, authToken } = useAuth()
 
-const apiHost = () =>
-  process.env.NODE_ENV === 'production'
-    ? 'https://hoganmcdonald.com'
-    : 'http://localhost:3001'
+  const getHeadersFromToken = (authToken: AuthToken) => {
+    const authHeaders = new Headers()
+    for (const key in authToken) {
+      authHeaders.append(key, authToken[key])
+    }
+    return authHeaders
+  }
 
-export const get = (path: string) => {
-  return fetch(apiHost() + path).then(parseResponse)
+  const parseErrorResponses = (error: fetch.IsomorphicResponse) => {
+    switch (error.status) {
+      case 401:
+        return clearAuthToken()
+      default:
+        throw error
+    }
+  }
+
+  const parseResponseBody = (response: fetch.IsomorphicResponse) =>
+    response.json()
+
+  const get = async (path: string) => {
+    try {
+      const response = await fetch(apiUrl + path, {
+        method: 'GET',
+        cache: 'no-cache',
+        headers: getHeadersFromToken(authToken),
+      })
+
+      parseErrorResponses(response)
+      return await parseResponseBody(response)
+    } catch (error) {
+      parseErrorResponses(error)
+    }
+  }
+
+  return { get }
 }
