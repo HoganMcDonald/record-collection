@@ -3,4 +3,5 @@ export interface AuthToken {
   uid: string
   'access-token': string
   client: string
+  'token-type': 'Bearer'
 }
