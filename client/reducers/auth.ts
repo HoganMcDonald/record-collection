@@ -17,6 +17,7 @@ const initialState: Auth = {
     expiry: '',
     'access-token': '',
     client: '',
+    'token-type': 'Bearer',
   },
 }
 
@@ -50,5 +51,10 @@ export const useAuth = () => {
     }
   }
 
-  return { authToken, setAuthToken }
+  const clearAuthToken = () => {
+    const { authToken } = initialState
+    setAuthToken(authToken)
+  }
+
+  return { authToken, setAuthToken, clearAuthToken }
 }
