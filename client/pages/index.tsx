@@ -1,8 +1,11 @@
+import { NextPage, NextPageContext } from 'next'
 import React from 'react'
 import styled from 'styled-components'
 
 import SpotifyLogo from '../components/SpotifyLogo'
 import Button from '../components/Button'
+import { get } from '../lib/apiHelpers'
+import { AuthToken } from '../types'
 
 const Background = styled.div`
   height: 100vh;
@@ -25,16 +28,61 @@ const SignInButton = styled(Button)`
   color: ${({ theme }) => theme.colors.textPrimary};
 `
 
-const Home = () => (
-  <Background>
-    <h1>Log in to get started.</h1>
-    <SignInButton
-      label="Log in with Spotify"
-      href={'http://localhost:3001/auth/spotify'}>
-      <SignInLogo />
-      Log in with Spotify
-    </SignInButton>
-  </Background>
-)
+interface HomeInitialProps {
+  authToken: AuthToken
+}
+
+const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
+  const titleText = 'Log in to get started.'
+  const [title, setTitle] = React.useState('')
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.search) {
+      window.location.search = ''
+    }
+  }, [])
+
+  React.useLayoutEffect(() => {
+    setTimeout(() => {
+      if (title !== titleText) {
+        setTitle(titleText.substring(0, title.length + 1))
+      }
+    }, 15)
+  }, [title])
+
+  return (
+    <Background>
+      <h1>{title}</h1>
+      <SignInButton
+        label="Log in with Spotify"
+        href={'http://localhost:3001/auth/spotify'}>
+        <SignInLogo />
+        Log in with Spotify
+      </SignInButton>
+    </Background>
+  )
+}
+
+interface Context extends NextPageContext {
+  query: {
+    uid?: string
+    client?: string
+    expiry?: string
+    'access-token'?: string
+  }
+}
+
+Home.getInitialProps = async ({
+  query: { uid, client, expiry, 'access-token': accessToken },
+}: Context) => {
+  const authToken: AuthToken = {
+    uid,
+    client,
+    expiry,
+    'access-token': accessToken,
+  }
+
+  return { authToken }
+}
 
 export default Home
