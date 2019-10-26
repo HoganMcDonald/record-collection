@@ -1,7 +1,5 @@
 module Users
   class OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
-    after_action :update_auth_header
-
     def omniauth_success
       get_resource_from_auth_hash
       set_token_on_resource
@@ -11,6 +9,8 @@ module Users
       @resource.save!
 
       yield @resource if block_given?
+
+      update_auth_header
 
       redirect_to "#{RecordCollection::CLIENT_HOST}/#{token_to_params}"
     end
@@ -33,10 +33,10 @@ module Users
 
     def token_to_params
       [
-        "?uid=#{CGI.escape @auth_params[:uid]}",
-        "&expiry=#{@auth_params[:expiry]}",
-        "&client=#{CGI.escape @auth_params[:client_id]}",
-        "&access-token=#{CGI.escape @auth_params[:auth_token]}",
+        "?uid=#{CGI.escape response.headers['uid']}",
+        "&expiry=#{response.headers['expiry']}",
+        "&client=#{CGI.escape response.headers['client']}",
+        "&access-token=#{CGI.escape response.headers['access-token']}",
       ].join('')
     end
   end
