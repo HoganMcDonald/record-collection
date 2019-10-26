@@ -59,6 +59,9 @@ const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
         <SignInLogo />
         Log in with Spotify
       </SignInButton>
+      <Button label="test" onClick={() => get('/me')}>
+        test
+      </Button>
     </Background>
   )
 }
