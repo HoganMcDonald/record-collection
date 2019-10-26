@@ -35,8 +35,6 @@ interface HomeInitialProps {
 }
 
 const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
-  const titleText = 'Log in to get started.'
-  const [title, setTitle] = React.useState('')
   const { setAuthToken } = useAuth()
   const { get } = useApiRequests()
 
@@ -47,17 +45,9 @@ const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
     }
   }, [])
 
-  React.useLayoutEffect(() => {
-    setTimeout(() => {
-      if (title !== titleText) {
-        setTitle(titleText.substring(0, title.length + 1))
-      }
-    }, 15)
-  }, [title])
-
   return (
     <Background>
-      <h1>{title}</h1>
+      <h1>Log in to get started.</h1>
       <SignInButton
         label="Log in with Spotify"
         href={'http://localhost:3001/auth/spotify'}>
