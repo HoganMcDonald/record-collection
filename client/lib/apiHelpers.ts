@@ -28,18 +28,14 @@ export const useApiRequests = () => {
     response.json()
 
   const get = async (path: string) => {
-    try {
-      const response = await fetch(apiUrl + path, {
-        method: 'GET',
-        cache: 'no-cache',
-        headers: getHeadersFromToken(authToken),
-      })
+    const response = await fetch(apiUrl + path, {
+      method: 'GET',
+      cache: 'no-cache',
+      headers: getHeadersFromToken(authToken),
+    })
 
-      parseErrorResponses(response)
-      return await parseResponseBody(response)
-    } catch (error) {
-      parseErrorResponses(error)
-    }
+    parseErrorResponses(response)
+    return await parseResponseBody(response)
   }
 
   return { get }
