@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from 'redux-starter-kit'
 
-interface User {
+export interface User {
   email: string
 }
 
