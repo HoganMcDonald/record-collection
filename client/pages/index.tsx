@@ -6,7 +6,7 @@ import { AuthToken } from '../types'
 import { isEnv } from '../lib/helpers'
 import { useAuth } from '../reducers/auth'
 import { useUser } from '../reducers/users'
-import { Background } from '../components/styled'
+import Layout from '../components/Layout'
 
 interface HomeInitialProps {
   authToken?: AuthToken
@@ -32,9 +32,9 @@ const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
   }, [authToken])
 
   return (
-    <Background>
+    <Layout>
       <h1>Logged in!</h1>
-    </Background>
+    </Layout>
   )
 }
 
