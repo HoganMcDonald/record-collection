@@ -1,4 +1,5 @@
 import { NextPage, NextPageContext } from 'next'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 import { AuthToken } from '../types'
@@ -14,16 +15,22 @@ interface HomeInitialProps {
 const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
   const { setAuthToken } = useAuth()
   const { getMe } = useUser()
+  const router = useRouter()
 
   React.useEffect(() => {
     if (isEnv('server')) return
 
     if (!!authToken) {
       setAuthToken(authToken)
-    } else {
-      getMe()
+      router.replace('/')
     }
   }, [])
+
+  React.useEffect(() => {
+    if (!authToken) {
+      getMe()
+    }
+  }, [authToken])
 
   return (
     <Background>

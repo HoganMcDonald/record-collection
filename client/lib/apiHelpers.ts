@@ -29,7 +29,7 @@ export const useApiRequests = () => {
   const parseResponse = async (response: fetch.IsomorphicResponse) => {
     const body = await response.json()
 
-    if (body.errors || response.status < 400) {
+    if (body.errors || response.status >= 400) {
       switch (response.status) {
         case 401:
           clearAuthToken()
