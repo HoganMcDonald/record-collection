@@ -3,6 +3,7 @@ import App from 'next/app'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { Provider } from 'react-redux'
 
+import Authenticator from '../components/Authenticator'
 import theme from '../theme'
 import store from '../store'
 
@@ -20,6 +21,7 @@ export default class MyApp extends App {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <>
+            <Authenticator />
             <PageStyles />
             <Component {...pageProps} />
           </>
