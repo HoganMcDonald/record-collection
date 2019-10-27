@@ -27,7 +27,7 @@ if (isEnv('client')) {
   const authToken: AuthToken = JSON.parse(
     window.localStorage.getItem(localStorageKey)
   )
-  initialState = { authToken }
+  if (!!authToken) initialState = { authToken }
 }
 
 const authSlice = createSlice({
