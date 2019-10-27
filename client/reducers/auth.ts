@@ -11,7 +11,7 @@ export interface Auth {
   authToken: AuthToken
 }
 
-let initialState: Auth = {
+const clearedState: Auth = {
   authToken: {
     uid: '',
     expiry: '',
@@ -20,6 +20,8 @@ let initialState: Auth = {
     'token-type': 'Bearer',
   },
 }
+
+let initialState = clearedState
 
 if (isEnv('client')) {
   const authToken: AuthToken = JSON.parse(
@@ -33,7 +35,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuth: (state, action: PayloadAction<Auth>) => action.payload,
-    clearAuth: state => initialState,
+    clearAuth: state => clearedState,
   },
 })
 
@@ -42,6 +44,9 @@ export default authSlice.reducer
 export const useAuth = () => {
   const dispatch = useDispatch()
   const authToken = useSelector((state: State) => state.auth.authToken)
+  const loggedIn = useSelector(
+    (state: State) => !!state.auth.authToken['access-token']
+  )
 
   const setAuthToken = (authToken: AuthToken) => {
     dispatch(authSlice.actions.setAuth({ authToken }))
@@ -52,7 +57,13 @@ export const useAuth = () => {
 
   const clearAuthToken = () => {
     dispatch(authSlice.actions.clearAuth())
+    if (isEnv('client')) {
+      window.localStorage.setItem(
+        localStorageKey,
+        JSON.stringify(clearedState.authToken)
+      )
+    }
   }
 
-  return { authToken, setAuthToken, clearAuthToken }
+  return { authToken, setAuthToken, clearAuthToken, loggedIn }
 }
