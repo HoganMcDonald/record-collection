@@ -11,7 +11,7 @@ export interface Auth {
   authToken: AuthToken
 }
 
-const initialState: Auth = {
+let initialState: Auth = {
   authToken: {
     uid: '',
     expiry: '',
@@ -21,11 +21,19 @@ const initialState: Auth = {
   },
 }
 
+if (isEnv('client')) {
+  const authToken: AuthToken = JSON.parse(
+    window.localStorage.getItem(localStorageKey)
+  )
+  initialState = { authToken }
+}
+
 const authSlice = createSlice({
   slice: 'auth',
   initialState,
   reducers: {
     setAuth: (state, action: PayloadAction<Auth>) => action.payload,
+    clearAuth: state => initialState,
   },
 })
 
@@ -35,15 +43,6 @@ export const useAuth = () => {
   const dispatch = useDispatch()
   const authToken = useSelector((state: State) => state.auth.authToken)
 
-  React.useEffect(() => {
-    if (isEnv('client')) {
-      const authToken: AuthToken = JSON.parse(
-        window.localStorage.getItem(localStorageKey)
-      )
-      dispatch(authSlice.actions.setAuth({ authToken }))
-    }
-  }, [])
-
   const setAuthToken = (authToken: AuthToken) => {
     dispatch(authSlice.actions.setAuth({ authToken }))
     if (isEnv('client')) {
@@ -52,8 +51,7 @@ export const useAuth = () => {
   }
 
   const clearAuthToken = () => {
-    const { authToken } = initialState
-    setAuthToken(authToken)
+    dispatch(authSlice.actions.clearAuth())
   }
 
   return { authToken, setAuthToken, clearAuthToken }
