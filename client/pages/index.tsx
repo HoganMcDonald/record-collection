@@ -1,35 +1,11 @@
 import { NextPage, NextPageContext } from 'next'
 import React from 'react'
-import styled from 'styled-components'
 
-import SpotifyLogo from '../components/SpotifyLogo'
-import Button from '../components/Button'
-import { useApiRequests } from '../lib/apiHelpers'
 import { AuthToken } from '../types'
 import { isEnv } from '../lib/helpers'
 import { useAuth } from '../reducers/auth'
 import { useUser } from '../reducers/users'
-
-const Background = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.textPrimary};
-`
-
-const SignInLogo = styled(SpotifyLogo)`
-  height: 100%;
-  margin-right: 0.5rem;
-`
-
-const SignInButton = styled(Button)`
-  padding-right: 0.75rem;
-  color: ${({ theme }) => theme.colors.textPrimary};
-`
+import { Background } from '../components/styled'
 
 interface HomeInitialProps {
   authToken?: AuthToken
@@ -51,13 +27,7 @@ const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
 
   return (
     <Background>
-      <h1>Log in to get started.</h1>
-      <SignInButton
-        label="Log in with Spotify"
-        href={'http://localhost:3001/auth/spotify'}>
-        <SignInLogo />
-        Log in with Spotify
-      </SignInButton>
+      <h1>Logged in!</h1>
     </Background>
   )
 }
