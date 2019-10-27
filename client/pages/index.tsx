@@ -13,15 +13,14 @@ interface HomeInitialProps {
 }
 
 const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
-  const { setAuthToken } = useAuth()
+  const { setAuthToken, loggedIn } = useAuth()
   const { getMe } = useUser()
   const router = useRouter()
 
   React.useEffect(() => {
     if (isEnv('server')) return
-
     if (!!authToken) {
-      setAuthToken(authToken)
+      if (!loggedIn) setAuthToken(authToken)
       router.replace('/')
     }
   }, [])
