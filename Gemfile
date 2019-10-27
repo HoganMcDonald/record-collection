@@ -26,6 +26,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rack-cors'
 
 gem 'devise_token_auth'
+gem 'faraday'
 gem 'omniauth-spotify'
 
 group :development, :test do

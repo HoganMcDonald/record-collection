@@ -197,6 +197,7 @@ DEPENDENCIES
   byebug
   devise_token_auth
   dotenv-rails
+  faraday
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
   omniauth-spotify
