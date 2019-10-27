@@ -15,15 +15,6 @@ export const useApiRequests = () => {
     return authHeaders
   }
 
-  const parseErrorResponses = (error: fetch.IsomorphicResponse) => {
-    switch (error.status) {
-      case 401:
-        return clearAuthToken()
-      default:
-        throw error
-    }
-  }
-
   const updateAuthTokenFromHeaders = (response: fetch.IsomorphicResponse) => {
     setAuthToken({
       uid: response.headers.get('uid') || authToken.uid,
@@ -35,8 +26,21 @@ export const useApiRequests = () => {
     })
   }
 
-  const parseResponseBody = (response: fetch.IsomorphicResponse) =>
-    response.json()
+  const parseResponse = async (response: fetch.IsomorphicResponse) => {
+    const body = await response.json()
+
+    if (body.errors || response.status < 400) {
+      switch (response.status) {
+        case 401:
+          clearAuthToken()
+          throw new Error('Please sign in to continue.')
+        default:
+          throw new Error(body.errors.join(', '))
+      }
+    }
+
+    return body
+  }
 
   const get = async (path: string) => {
     const response = await fetch(apiUrl + path, {
@@ -46,8 +50,7 @@ export const useApiRequests = () => {
     })
 
     updateAuthTokenFromHeaders(response)
-    parseErrorResponses(response)
-    return await parseResponseBody(response)
+    return await parseResponse(response)
   }
 
   return { get }
