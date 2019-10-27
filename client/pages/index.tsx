@@ -8,6 +8,7 @@ import { useApiRequests } from '../lib/apiHelpers'
 import { AuthToken } from '../types'
 import { isEnv } from '../lib/helpers'
 import { useAuth } from '../reducers/auth'
+import { useUser } from '../reducers/users'
 
 const Background = styled.div`
   height: 100vh;
@@ -31,17 +32,20 @@ const SignInButton = styled(Button)`
 `
 
 interface HomeInitialProps {
-  authToken: AuthToken
+  authToken?: AuthToken
 }
 
 const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
   const { setAuthToken } = useAuth()
-  const { get } = useApiRequests()
+  const { getMe } = useUser()
 
   React.useEffect(() => {
-    if (isEnv('client') && window.location.search) {
+    if (isEnv('server')) return
+
+    if (!!authToken) {
       setAuthToken(authToken)
-      window.location.search = ''
+    } else {
+      getMe()
     }
   }, [])
 
@@ -54,9 +58,6 @@ const Home: NextPage<HomeInitialProps> = ({ authToken }) => {
         <SignInLogo />
         Log in with Spotify
       </SignInButton>
-      <Button label="test" onClick={() => get('/me')}>
-        test
-      </Button>
     </Background>
   )
 }
@@ -73,7 +74,7 @@ interface Context extends NextPageContext {
 Home.getInitialProps = async ({
   query: { uid, client, expiry, 'access-token': accessToken },
 }: Context) => {
-  const authToken: AuthToken = {
+  const tokenFromParams: AuthToken = {
     uid,
     client,
     expiry,
@@ -81,7 +82,7 @@ Home.getInitialProps = async ({
     'token-type': 'Bearer',
   }
 
-  return { authToken }
+  return { authToken: tokenFromParams.client ? tokenFromParams : null }
 }
 
 export default Home
