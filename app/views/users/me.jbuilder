@@ -1,1 +1,1 @@
-json.good 'job'
+json.partial! 'partials/user', user: @current_user
