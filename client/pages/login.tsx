@@ -1,10 +1,16 @@
 import { NextPage } from 'next'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 import { Background } from '../components/styled'
 import SpotifyLogo from '../components/SpotifyLogo'
 import Button from '../components/Button'
+
+const GlobalStyles = createGlobalStyle`
+  html, body, #__next {
+    height: 100vh;
+  }
+`
 
 const SignInLogo = styled(SpotifyLogo)`
   height: 100%;
@@ -19,6 +25,7 @@ const SignInButton = styled(Button)`
 const Login: NextPage = () => {
   return (
     <Background>
+      <GlobalStyles />
       <h1>Log in to get started.</h1>
       <SignInButton
         label="Log in with Spotify"
