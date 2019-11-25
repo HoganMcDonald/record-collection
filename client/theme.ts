@@ -9,6 +9,9 @@ const theme = {
     accent: '#ba8af9',
     accentDark: '#3d2d51',
 
+    playBar: '#1c1c1c',
+    icons: '#FFFFFF',
+
     textPrimary: '#e2e2e2',
     textSecondary: '#9b9b9b',
   },
