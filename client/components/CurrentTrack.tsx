@@ -17,13 +17,10 @@ const AlbumCover = styled.img<{ playing: boolean }>`
   width: auto;
   border-radius: 999px;
   margin: 0;
-
-  ${({ playing }) =>
-    playing
-      ? css`
-          animation: ${spin} 8s linear infinite;
-        `
-      : null}
+  ${css`
+    animation: ${spin} 8s linear infinite;
+  `}
+  animation-play-state: ${({ playing }) => (playing ? 'play' : 'paused')};
 `
 
 const ArtistName = styled.p`
