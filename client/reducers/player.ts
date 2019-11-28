@@ -35,6 +35,10 @@ const playerSlice = createSlice({
       ...state,
       ...action.payload,
     }),
+    setIsPlaying: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      isPlaying: action.payload,
+    }),
   },
 })
 
@@ -43,7 +47,7 @@ export default playerSlice.reducer
 export const usePlayer = () => {
   const dispatch = useDispatch()
   const playerStatus = useSelector((state: State) => state.player)
-  const { get } = useApiRequests()
+  const { get, put } = useApiRequests()
 
   const getPlayerStatus = async () => {
     try {
@@ -54,5 +58,23 @@ export const usePlayer = () => {
     }
   }
 
-  return { playerStatus, getPlayerStatus }
+  const pause = async () => {
+    try {
+      await put('/player', { pause: true })
+      dispatch(playerSlice.actions.setIsPlaying(false))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const play = async () => {
+    try {
+      await put('/player', { play: true })
+      dispatch(playerSlice.actions.setIsPlaying(true))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  return { playerStatus, getPlayerStatus, pause, play }
 }
