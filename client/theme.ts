@@ -2,9 +2,9 @@ import Typography from 'typography'
 
 const theme = {
   colors: {
-    black: '#000000',
     white: '#e2e2e2',
-    navigation: '#1f1f1f',
+    gray: '#6D7278',
+
     accent: '#ba8af9',
     accentDark: '#3d2d51',
 
@@ -13,9 +13,6 @@ const theme = {
     playBar: '#1c1c1c',
     progressBar: '#B620E0',
     icons: '#FFFFFF',
-
-    textPrimary: '#e2e2e2',
-    textSecondary: '#9b9b9b',
   },
   typography: {
     baseFontSize: '16px',
