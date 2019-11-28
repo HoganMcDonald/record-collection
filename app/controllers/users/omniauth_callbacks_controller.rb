@@ -15,7 +15,7 @@ module Users
 
       update_auth_header
 
-      redirect_to "#{RecordCollection::CLIENT_HOST}/#{token_to_params}"
+      redirect_to "#{RecordCollection::CLIENT_HOST}/login#{token_to_params}"
     end
 
     def failure

@@ -1,4 +1,5 @@
-import { NextPage } from 'next'
+import { NextPage, NextPageContext } from 'next'
+import { useRouter } from 'next/router'
 import React from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 
@@ -6,6 +7,9 @@ import { Background } from '../components/styled'
 import SpotifyLogo from '../components/SpotifyLogo'
 import Button from '../components/Button'
 import { apiUrl } from '../constants'
+import { AuthToken } from '../types'
+import { useAuth } from '../reducers/auth'
+import { isEnv } from '../lib/helpers'
 
 const GlobalStyles = createGlobalStyle`
   html, body, #__next {
@@ -23,7 +27,22 @@ const SignInButton = styled(Button)`
   color: ${({ theme }) => theme.colors.white};
 `
 
-const Login: NextPage = () => {
+interface LoginInitialProps {
+  authToken?: AuthToken
+}
+
+const Login: NextPage<LoginInitialProps> = ({ authToken }) => {
+  const { setAuthToken, loggedIn } = useAuth()
+  const router = useRouter()
+
+  React.useEffect(() => {
+    if (isEnv('server')) return
+    if (!!authToken) {
+      if (!loggedIn) setAuthToken(authToken)
+      router.replace('/')
+    }
+  }, [])
+
   return (
     <Background>
       <GlobalStyles />
@@ -34,6 +53,29 @@ const Login: NextPage = () => {
       </SignInButton>
     </Background>
   )
+}
+
+interface Context extends NextPageContext {
+  query: {
+    uid?: string
+    client?: string
+    expiry?: string
+    'access-token'?: string
+  }
+}
+
+Login.getInitialProps = async ({
+  query: { uid, client, expiry, 'access-token': accessToken },
+}: Context) => {
+  const tokenFromParams: AuthToken = {
+    uid,
+    client,
+    expiry,
+    'access-token': accessToken,
+    'token-type': 'Bearer',
+  }
+
+  return { authToken: tokenFromParams.client ? tokenFromParams : null }
 }
 
 export default Login
