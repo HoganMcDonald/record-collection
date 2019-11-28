@@ -19,7 +19,7 @@ const SignInLogo = styled(SpotifyLogo)`
 
 const SignInButton = styled(Button)`
   padding-right: 0.75rem;
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ theme }) => theme.colors.white};
 `
 
 const Login: NextPage = () => {

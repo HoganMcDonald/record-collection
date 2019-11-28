@@ -8,7 +8,7 @@ export const Background = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ theme }) => theme.colors.white};
 `
 
 interface ResetButtonProps {
