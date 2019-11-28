@@ -1,5 +1,6 @@
 json.isPlaying player['is_playing']
-json.progress player['progress_ms'] / player['item']['duration_ms']
+json.progress player['progress_ms']
+json.trackDuration player['item']['duration_ms']
 json.shuffle player['shuffle_state']
 json.repeat player['repeat_state']
 
