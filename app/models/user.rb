@@ -17,4 +17,10 @@ class User < ActiveRecord::Base
       user.image = auth.info.image
     end
   end
+
+  # my dirty secret...
+  def password=(password)
+  end
+  def password_confirmation=(password_confirmation)
+  end
 end
