@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 import { Play, Speaker, PreviousSong, NextSong } from './icons'
 import { ResetButton } from './styled'
+import { usePlayer } from '../reducers/player'
+import { useInterval } from '../lib/useInterval'
 
 const Controls = styled.div`
   display: flex;
@@ -37,23 +39,43 @@ const ProgressBar = styled.div<{ progress: number }>`
 
 const NowPlaying = styled.div``
 
-const PlayBar: React.FC = () => (
-  <PlayBarContainer>
-    <ProgressBar progress={43} />
-    <NowPlaying />
-    <Controls>
-      <ControlButton>
-        <PreviousSong />
-      </ControlButton>
-      <ControlButton>
-        <Play />
-      </ControlButton>
-      <ControlButton>
-        <NextSong />
-      </ControlButton>
-    </Controls>
-    <Speaker />
-  </PlayBarContainer>
-)
+const PlayBar: React.FC = () => {
+  const { playerStatus, getPlayerStatus } = usePlayer()
+
+  React.useEffect(() => {
+    getPlayerStatus()
+  }, [])
+
+  useInterval(
+    () => {
+      getPlayerStatus()
+    },
+    playerStatus.isPlaying ? 500 : 10000
+  )
+
+  const progress =
+    playerStatus.trackDuration > 0
+      ? (playerStatus.progress / playerStatus.trackDuration) * 100
+      : 0
+
+  return (
+    <PlayBarContainer>
+      <ProgressBar progress={progress} />
+      <NowPlaying />
+      <Controls>
+        <ControlButton>
+          <PreviousSong />
+        </ControlButton>
+        <ControlButton onClick={getPlayerStatus}>
+          <Play />
+        </ControlButton>
+        <ControlButton>
+          <NextSong />
+        </ControlButton>
+      </Controls>
+      <Speaker />
+    </PlayBarContainer>
+  )
+}
 
 export default PlayBar
