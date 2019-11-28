@@ -5,6 +5,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { Background } from '../components/styled'
 import SpotifyLogo from '../components/SpotifyLogo'
 import Button from '../components/Button'
+import { apiUrl } from '../constants'
 
 const GlobalStyles = createGlobalStyle`
   html, body, #__next {
@@ -27,9 +28,7 @@ const Login: NextPage = () => {
     <Background>
       <GlobalStyles />
       <h1>Log in to get started.</h1>
-      <SignInButton
-        label="Log in with Spotify"
-        href={'http://localhost:3001/auth/spotify'}>
+      <SignInButton label="Log in with Spotify" href={`${apiUrl}/auth/spotify`}>
         <SignInLogo />
         Log in with Spotify
       </SignInButton>
