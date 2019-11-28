@@ -12,6 +12,10 @@ const PageStyles = createGlobalStyle`
     margin: 0;
     height: 100%;
   }
+
+  p {
+    margin: 0;
+  }
 `
 
 export default class MyApp extends App {
