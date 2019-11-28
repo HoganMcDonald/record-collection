@@ -5,6 +5,9 @@ module Users
       set_token_on_resource
       create_auth_params
 
+      @resource.spotify_access_token = auth_hash.credentials.token
+      @resource.spotify_refresh_token = auth_hash.credentials.refresh_token
+      @resource.spotify_token_expires_at = Time.at auth_hash.credentials.expires_at
       sign_in(:user, @resource, store: false, bypass: false)
       @resource.save!
 
