@@ -11,6 +11,14 @@ class Spotify
     response.body
   end
 
+  def play!(data = {})
+    put!('/me/player/play', data)
+  end
+
+  def pause!
+    put!('/me/player/pause')
+  end
+
   private
 
   SPOTIFY_BASE_URI = 'https://api.spotify.com/v1'.freeze
@@ -30,6 +38,11 @@ class Spotify
   def get!(endpoint)
     refresh_token!
     client.get(url(endpoint), {}, Authorization: "Bearer #{@token}")
+  end
+
+  def put!(endpoint, data = {})
+    refresh_token!
+    client.put(url(endpoint), data.to_json, Authorization: "Bearer #{@token}")
   end
 
   def set_token!
