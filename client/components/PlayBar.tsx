@@ -1,10 +1,11 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes, css } from 'styled-components'
 
-import { Play, Speaker, PreviousSong, NextSong } from './icons'
+import { Play, Speaker, PreviousSong, NextSong, Pause } from './icons'
 import { ResetButton } from './styled'
 import { usePlayer } from '../reducers/player'
 import { useInterval } from '../lib/useInterval'
+import CurrentTrack from './CurrentTrack'
 
 const Controls = styled.div`
   display: flex;
@@ -37,8 +38,6 @@ const ProgressBar = styled.div<{ progress: number }>`
   border-top-right-radius: 999px;
 `
 
-const NowPlaying = styled.div``
-
 const PlayBar: React.FC = () => {
   const { playerStatus, getPlayerStatus } = usePlayer()
 
@@ -61,13 +60,16 @@ const PlayBar: React.FC = () => {
   return (
     <PlayBarContainer>
       <ProgressBar progress={progress} />
-      <NowPlaying />
+      <CurrentTrack
+        nowPlaying={playerStatus.nowPlaying}
+        isPlaying={playerStatus.isPlaying}
+      />
       <Controls>
         <ControlButton>
           <PreviousSong />
         </ControlButton>
         <ControlButton onClick={getPlayerStatus}>
-          <Play />
+          {playerStatus.isPlaying ? <Pause /> : <Play />}
         </ControlButton>
         <ControlButton>
           <NextSong />
