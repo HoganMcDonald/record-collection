@@ -10,10 +10,19 @@ import CurrentTrack from './CurrentTrack'
 const Controls = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex: 1;
 `
 
 const ControlButton = styled(ResetButton)`
   margin: 0 12px;
+`
+
+const DeviceButton = styled(ResetButton)`
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
 `
 
 const PlayBarContainer = styled.div`
@@ -39,7 +48,9 @@ const ProgressBar = styled.div<{ progress: number }>`
 `
 
 const PlayBar: React.FC = () => {
-  const { playerStatus, getPlayerStatus } = usePlayer()
+  const { playerStatus, getPlayerStatus, pause, play } = usePlayer()
+
+  const handlePlayPause = () => (playerStatus.isPlaying ? pause() : play())
 
   React.useEffect(() => {
     getPlayerStatus()
@@ -68,14 +79,16 @@ const PlayBar: React.FC = () => {
         <ControlButton>
           <PreviousSong />
         </ControlButton>
-        <ControlButton onClick={getPlayerStatus}>
+        <ControlButton onClick={handlePlayPause}>
           {playerStatus.isPlaying ? <Pause /> : <Play />}
         </ControlButton>
         <ControlButton>
           <NextSong />
         </ControlButton>
       </Controls>
-      <Speaker />
+      <DeviceButton>
+        <Speaker />
+      </DeviceButton>
     </PlayBarContainer>
   )
 }

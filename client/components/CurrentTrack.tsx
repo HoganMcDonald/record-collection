@@ -35,6 +35,8 @@ const CurrentTrackContainer = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  margin-right: auto;
+  flex: 1;
 `
 
 const TrackInfo = styled.div`
