@@ -27,7 +27,7 @@ export const useApiRequests = () => {
   }
 
   const parseResponse = async (response: fetch.IsomorphicResponse) => {
-    const body = await response.json()
+    const body = response.status === 204 ? {} : await response.json()
 
     if (body.errors || response.status >= 400) {
       switch (response.status) {
@@ -53,5 +53,19 @@ export const useApiRequests = () => {
     return await parseResponse(response)
   }
 
-  return { get }
+  const put = async (path: string, data: object) => {
+    const headers = getHeadersFromToken(authToken)
+    headers.append('Content-Type', 'application/json')
+    const response = await fetch(apiUrl + path, {
+      method: 'PUT',
+      cache: 'no-cache',
+      headers,
+      body: JSON.stringify(data),
+    })
+
+    updateAuthTokenFromHeaders(response)
+    return await parseResponse(response)
+  }
+
+  return { get, put }
 }
