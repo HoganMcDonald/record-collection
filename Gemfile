@@ -27,6 +27,7 @@ gem 'rack-cors'
 
 gem 'devise_token_auth'
 gem 'faraday'
+gem 'faraday_middleware'
 gem 'omniauth-spotify'
 
 group :development, :test do
