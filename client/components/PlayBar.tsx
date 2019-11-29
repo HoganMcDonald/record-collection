@@ -6,6 +6,7 @@ import { ResetButton } from './styled'
 import { usePlayer } from '../reducers/player'
 import { useInterval } from '../lib/useInterval'
 import CurrentTrack from './CurrentTrack'
+import Progress from './Progress'
 
 const Controls = styled.div`
   display: flex;
@@ -35,18 +36,6 @@ const PlayBarContainer = styled.div`
   position: relative;
 `
 
-const ProgressBar = styled.div<{ progress: number }>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 5px;
-  transform: translateY(-50%);
-  width: ${({ progress }) => progress}%;
-  background-color: ${({ theme }) => theme.colors.progressBar};
-  border-bottom-right-radius: 999px;
-  border-top-right-radius: 999px;
-`
-
 const PlayBar: React.FC = () => {
   const { playerStatus, getPlayerStatus, pause, play } = usePlayer()
 
@@ -70,7 +59,10 @@ const PlayBar: React.FC = () => {
 
   return (
     <PlayBarContainer>
-      <ProgressBar progress={progress} />
+      <Progress
+        progress={progress}
+        onPlayHeadChange={position => console.log(position)}
+      />
       <CurrentTrack
         nowPlaying={playerStatus.nowPlaying}
         isPlaying={playerStatus.isPlaying}
