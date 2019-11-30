@@ -76,5 +76,14 @@ export const usePlayer = () => {
     }
   }
 
-  return { playerStatus, getPlayerStatus, pause, play }
+  const seek = async (positionMs: number) => {
+    try {
+      await put('/player', { position_ms: positionMs })
+      getPlayerStatus()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  return { playerStatus, getPlayerStatus, pause, play, seek }
 }
