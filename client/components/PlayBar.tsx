@@ -7,6 +7,7 @@ import { usePlayer } from '../reducers/player'
 import { useInterval } from '../lib/useInterval'
 import CurrentTrack from './CurrentTrack'
 import Progress from './Progress'
+import { progressToMs } from '../lib/helpers'
 
 const Controls = styled.div`
   display: flex;
@@ -37,7 +38,7 @@ const PlayBarContainer = styled.div`
 `
 
 const PlayBar: React.FC = () => {
-  const { playerStatus, getPlayerStatus, pause, play } = usePlayer()
+  const { playerStatus, getPlayerStatus, pause, play, seek } = usePlayer()
 
   const handlePlayPause = () => (playerStatus.isPlaying ? pause() : play())
 
@@ -49,7 +50,7 @@ const PlayBar: React.FC = () => {
     () => {
       getPlayerStatus()
     },
-    playerStatus.isPlaying ? 500 : 10000
+    playerStatus.isPlaying ? 1000 : 10000
   )
 
   const progress =
@@ -61,7 +62,9 @@ const PlayBar: React.FC = () => {
     <PlayBarContainer>
       <Progress
         progress={progress}
-        onPlayHeadChange={position => console.log(position)}
+        onPlayHeadChange={position =>
+          seek(progressToMs(position, playerStatus))
+        }
       />
       <CurrentTrack
         nowPlaying={playerStatus.nowPlaying}
