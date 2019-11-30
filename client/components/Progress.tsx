@@ -36,12 +36,23 @@ const ProgressContainer = styled.div`
   align-items: center;
 `
 
-const ProgressBar = styled.div<{ progress: number }>`
+interface ProgressBarProps {
+  grabbed: boolean
+  progress: number
+}
+
+const ProgressBar = styled.div<ProgressBarProps>`
   height: 100%;
-  width: ${({ progress }) => progress}%;
+  width: 100%;
+  max-width: ${({ progress }) => progress}%;
   background-color: ${({ theme }) => theme.colors.progressBar};
   border-bottom-right-radius: 999px;
   border-top-right-radius: 999px;
+  ${({ grabbed }) =>
+    !grabbed &&
+    css`
+      transition: max-width 1000ms linear;
+    `}
 `
 
 interface ProgressProps {
@@ -84,7 +95,10 @@ const Progress: React.FC<ProgressProps> = ({ progress, onPlayHeadChange }) => {
 
   return (
     <ProgressContainer ref={container}>
-      <ProgressBar progress={grabbed ? dragPosition : progress} />
+      <ProgressBar
+        grabbed={grabbed}
+        progress={grabbed ? dragPosition : progress}
+      />
       <DragContainer onMouseDown={startDrag}>
         <PlayHead
           onMouseEnter={() => setHover(true)}
