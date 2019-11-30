@@ -16,14 +16,17 @@ export const useApiRequests = () => {
   }
 
   const updateAuthTokenFromHeaders = (response: fetch.IsomorphicResponse) => {
-    setAuthToken({
-      uid: response.headers.get('uid') || authToken.uid,
-      client: response.headers.get('client') || authToken.client,
-      expiry: response.headers.get('expiry') || authToken.expiry,
-      'access-token':
-        response.headers.get('access-token') || authToken['access-token'],
+    const updatedToken: AuthToken = {
+      uid: response.headers.get('uid'),
+      client: response.headers.get('client'),
+      expiry: response.headers.get('expiry'),
+      'access-token': response.headers.get('access-token'),
       'token-type': 'Bearer',
-    })
+    }
+
+    if (updatedToken['access-token']) {
+      setAuthToken(updatedToken)
+    }
   }
 
   const parseResponse = async (response: fetch.IsomorphicResponse) => {
