@@ -19,6 +19,10 @@ class Spotify
     put!('/me/player/pause')
   end
 
+  def seek!(data = {})
+    put!("/me/player/seek?#{data.to_query}")
+  end
+
   private
 
   SPOTIFY_BASE_URI = 'https://api.spotify.com/v1'.freeze
