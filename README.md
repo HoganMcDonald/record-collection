@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Set Up
 
-Things you may want to cover:
+requires rvm, nvm, and yarn for install.
 
-* Ruby version
+1. `rvm use`
+1. `bundle`
+1. `rake db:setup`
+1. `cd client`
+1. `nvm use`
+1. `yarn`
 
-* System dependencies
+## Development
 
-* Configuration
+tab 1
+1. `rails s`
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+tab 2
+1. `cd client && yarn dev`
