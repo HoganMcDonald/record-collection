@@ -13,6 +13,10 @@ class PlayersController < ApplicationController
 
     spotify_client.play! if update_params[:play].present?
 
+    if update_params[:position_ms].present?
+      spotify_client.seek!({ position_ms: update_params[:position_ms] })
+    end
+
     head :no_content if @player.nil?
   end
 
@@ -23,6 +27,6 @@ class PlayersController < ApplicationController
   end
 
   def update_params
-    params.require(:player).permit(:play, :pause)
+    params.require(:player).permit(:play, :pause, :position_ms)
   end
 end
