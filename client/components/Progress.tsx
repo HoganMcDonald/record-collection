@@ -64,11 +64,12 @@ const Progress: React.FC<ProgressProps> = ({ progress, onPlayHeadChange }) => {
     const handleMouseMove = (event: MouseEvent) => {
       const position = (event.clientX / container.current.offsetWidth) * 100
       setDragPosition(position)
-      onPlayHeadChange(position)
     }
 
     const handleLetGo = () => {
       setGrabbed(false)
+      onPlayHeadChange(dragPosition)
+      setDragPosition(null)
     }
 
     if (grabbed) {
@@ -83,7 +84,7 @@ const Progress: React.FC<ProgressProps> = ({ progress, onPlayHeadChange }) => {
 
   return (
     <ProgressContainer ref={container}>
-      <ProgressBar progress={dragPosition || progress} />
+      <ProgressBar progress={grabbed ? dragPosition : progress} />
       <DragContainer onMouseDown={startDrag}>
         <PlayHead
           onMouseEnter={() => setHover(true)}
