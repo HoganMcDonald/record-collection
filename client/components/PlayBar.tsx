@@ -1,5 +1,5 @@
 import * as React from 'react'
-import styled, { keyframes, css } from 'styled-components'
+import styled from 'styled-components'
 
 import { Play, Speaker, PreviousSong, NextSong, Pause } from './icons'
 import { ResetButton } from './styled'
