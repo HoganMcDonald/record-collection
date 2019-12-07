@@ -3,9 +3,11 @@ import fetch from 'isomorphic-unfetch'
 import { AuthToken } from '../types'
 import { apiUrl } from '../constants'
 import { useAuth } from '../reducers/auth'
+import { useToasts } from '../reducers/toast'
 
 export const useApiRequests = () => {
   const { clearAuthToken, authToken, setAuthToken } = useAuth()
+  const { addToast } = useToasts()
 
   const getHeadersFromToken = (authToken: AuthToken) => {
     const authHeaders = new Headers()
@@ -32,11 +34,14 @@ export const useApiRequests = () => {
   const parseResponse = async (response: fetch.IsomorphicResponse) => {
     const body = response.status === 204 ? {} : await response.json()
 
-    if (body.errors || response.status >= 400) {
-      switch (response.status) {
+    const status: number = response.status
+    if (body.errors || status >= 400) {
+      switch (Math.min(status, 500)) {
         case 401:
           clearAuthToken()
-          throw new Error('Please sign in to continue.')
+          throw new Error(addToast('Please sign in to continue.').message)
+        case 500:
+          throw new Error(addToast('Something went wrong!').message)
         default:
           throw new Error(body.errors.join(', '))
       }
