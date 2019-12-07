@@ -37,10 +37,6 @@ export const useToasts = () => {
 
     dispatch(toastSlice.actions.addToast(newToast))
 
-    if (autoClose) {
-      setTimeout(() => removeToast(id), 2000)
-    }
-
     return newToast
   }
 
