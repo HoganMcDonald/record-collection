@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { Background } from './styled'
 import PlayBar from './PlayBar'
+import Toasts from './Toasts'
 
 const FullScreenContainer = styled.div`
   width: 100vw;
@@ -29,6 +30,7 @@ const Layout: React.FC = ({ children }) => {
       <SideBar />
       <ScrollableBackground>{children}</ScrollableBackground>
       <PlayBar />
+      <Toasts />
     </FullScreenContainer>
   )
 }
