@@ -77,9 +77,9 @@ const Progress: React.FC<ProgressProps> = ({ progress, onPlayHeadChange }) => {
       setDragPosition(position)
     }
 
-    const handleLetGo = () => {
+    const handleLetGo = (event: MouseEvent) => {
       setGrabbed(false)
-      onPlayHeadChange(dragPosition)
+      onPlayHeadChange((event.clientX / container.current.offsetWidth) * 100)
       setDragPosition(null)
     }
 
