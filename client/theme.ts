@@ -13,6 +13,7 @@ const theme = {
     playBar: '#1c1c1c',
     progressBar: '#B620E0',
     icons: '#FFFFFF',
+    inputs: '#121212',
   },
   typography: {
     baseFontSize: '16px',
