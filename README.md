@@ -31,3 +31,4 @@ tab 2
 1. have playhead change callback return a promise so that it doesn't jump around when dragged.
 1. investigate why occasionally logged out after non-use
 1. animate toasts being added deleted etc.
+1. countdown on toasts
