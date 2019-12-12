@@ -4,6 +4,7 @@ import React from 'react'
 import { useAuth } from '../reducers/auth'
 import { useUser } from '../reducers/users'
 import Layout from '../components/Layout'
+import Browse from '../components/Browse'
 
 const Home: NextPage = () => {
   const { authToken } = useAuth()
@@ -17,7 +18,7 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <h1>Logged in!</h1>
+      <Browse />
     </Layout>
   )
 }
