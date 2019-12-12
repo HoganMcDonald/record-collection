@@ -11,6 +11,12 @@ export const Background = styled.div`
   color: ${({ theme }) => theme.colors.white};
 `
 
+export const Container = styled.div`
+  height: 100%;
+  width: 100%;
+  padding: 1.5rem;
+`
+
 interface ResetButtonProps {
   disabled?: boolean
 }
