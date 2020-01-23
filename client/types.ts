@@ -67,7 +67,6 @@ export interface SearchResults {
   albums: SearchAlbum[]
   artists: SearchArtist[]
   tracks: SearchTrack[]
-  query: string
 }
 
 type SpotifyUri = string
