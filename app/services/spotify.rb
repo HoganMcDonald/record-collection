@@ -23,6 +23,10 @@ class Spotify
     put!("/me/player/seek?#{data.to_query}")
   end
 
+  def search!(q = '')
+    get!("/search?q=#{q}&type=album,artist,track")
+  end
+
   private
 
   SPOTIFY_BASE_URI = 'https://api.spotify.com/v1'.freeze
