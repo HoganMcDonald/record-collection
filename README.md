@@ -32,3 +32,5 @@ tab 2
 1. investigate why occasionally logged out after non-use
 1. animate toasts being added deleted etc.
 1. countdown on toasts
+1. remove unnecessary code from icons
+1. improve focus styles
