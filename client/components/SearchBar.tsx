@@ -5,8 +5,10 @@ import { useDebouncedCallback } from 'use-debounce'
 import { Search } from './icons'
 import { useSearch } from '../reducers/search'
 
-const SearchBarContainer = styled.span`
+const SearchBarContainer = styled.div`
   position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem;
 `
 
 const SearchInput = styled.input`
