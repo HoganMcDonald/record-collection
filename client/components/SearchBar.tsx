@@ -1,6 +1,9 @@
 import * as React from 'react'
 import styled from 'styled-components'
+
+import { useDebouncedCallback } from 'use-debounce'
 import { Search } from './icons'
+import { useSearch } from '../reducers/search'
 
 const SearchBarContainer = styled.span`
   position: relative;
@@ -25,12 +28,23 @@ const SearchIcon = styled(Search)`
 `
 
 const SearchBar: React.FC = () => {
+  const { search } = useSearch()
   const [value, setValue] = React.useState('')
+
+  const [handleChange] = useDebouncedCallback(() => {
+    if (value) {
+      search(value)
+    }
+  }, 200)
+
   return (
     <SearchBarContainer>
       <SearchInput
         value={value}
-        onChange={event => setValue(event.target.value)}
+        onChange={event => {
+          setValue(event.target.value)
+          handleChange()
+        }}
       />
       <SearchIcon />
     </SearchBarContainer>
