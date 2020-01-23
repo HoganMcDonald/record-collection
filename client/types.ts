@@ -34,3 +34,46 @@ export interface ApiPlayer {
     volume: number
   }
 }
+
+interface SearchArtist {
+  uri: SpotifyUri
+  name: string
+  images?: {
+    large: SpotifyImage
+    medium: SpotifyImage
+    small: SpotifyImage
+  }
+}
+
+interface SearchAlbum {
+  uri: SpotifyUri
+  name: string
+  artist: SearchArtist
+  images: {
+    large: SpotifyImage
+    medium: SpotifyImage
+    small: SpotifyImage
+  }
+}
+
+interface SearchTrack {
+  uri: SpotifyUri
+  name: string
+  artist: SearchArtist
+  album: SearchAlbum
+}
+
+export interface SearchResults {
+  albums: SearchAlbum[]
+  artists: SearchArtist[]
+  tracks: SearchTrack[]
+  query: string
+}
+
+type SpotifyUri = string
+
+interface SpotifyImage {
+  height: number
+  width: number
+  url: string
+}
