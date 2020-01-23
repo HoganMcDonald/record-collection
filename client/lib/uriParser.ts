@@ -1,6 +1,6 @@
 import { SpotifyUri } from '../types'
 
-const parseUri = (uri: SpotifyUri) => {
+export const parseUri = (uri: SpotifyUri) => {
   const uriComponents = uri.split(':')
   return {
     type: uriComponents[1],
@@ -10,5 +10,5 @@ const parseUri = (uri: SpotifyUri) => {
 
 export const resourceLocation = (uri: SpotifyUri) => {
   const uriHash = parseUri(uri)
-  return `${uriHash.type}/${uriHash.id}`
+  return `/${uriHash.type}/${uriHash.id}`
 }
