@@ -5,7 +5,10 @@ interface IconProps {
   className?: string
 }
 
-export const AdvanceCarousel: React.FC<IconProps> = ({ className }) => {
+export const AdvanceCarousel: React.FC<IconProps & { disabled: boolean }> = ({
+  className,
+  disabled,
+}) => {
   const { colors } = React.useContext(ThemeContext)
   return (
     <svg className={className} width="10px" height="17px" viewBox="0 0 8 13">
@@ -15,7 +18,7 @@ export const AdvanceCarousel: React.FC<IconProps> = ({ className }) => {
             <rect fill="#11051B" x="0" y="0" width="821" height="580"></rect>
             <g
               transform="translate(24.000000, 76.000000)"
-              fill={colors.icons}
+              fill={disabled ? colors.gray : colors.icons}
               fillRule="nonzero">
               <polygon points="741.517671 0 748 6.5 741.517671 13 740 11.4781923 744.964888 6.5 740 1.52180768"></polygon>
             </g>
