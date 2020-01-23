@@ -1,3 +1,10 @@
+export interface Album {
+  uri: SpotifyUri
+  name: string
+  artist: Artist
+  images: SpotifyImages
+}
+
 export interface AuthToken {
   expiry: string
   uid: string
@@ -35,44 +42,35 @@ export interface ApiPlayer {
   }
 }
 
-interface SearchArtist {
+export interface Artist {
   uri: SpotifyUri
   name: string
-  images?: {
-    large: SpotifyImage
-    medium: SpotifyImage
-    small: SpotifyImage
-  }
-}
-
-interface SearchAlbum {
-  uri: SpotifyUri
-  name: string
-  artist: SearchArtist
-  images: {
-    large: SpotifyImage
-    medium: SpotifyImage
-    small: SpotifyImage
-  }
-}
-
-interface SearchTrack {
-  uri: SpotifyUri
-  name: string
-  artist: SearchArtist
-  album: SearchAlbum
+  images?: SpotifyImages
 }
 
 export interface SearchResults {
-  albums: SearchAlbum[]
-  artists: SearchArtist[]
-  tracks: SearchTrack[]
+  albums: Album[]
+  artists: Artist[]
+  tracks: Track[]
 }
 
-type SpotifyUri = string
+export type SpotifyUri = string
 
 interface SpotifyImage {
   height: number
   width: number
   url: string
+}
+
+export interface SpotifyImages {
+  large: SpotifyImage
+  medium: SpotifyImage
+  small: SpotifyImage
+}
+
+export interface Track {
+  uri: SpotifyUri
+  name: string
+  artist: Artist
+  album: Album
 }
