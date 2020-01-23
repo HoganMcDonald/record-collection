@@ -34,3 +34,4 @@ tab 2
 1. countdown on toasts
 1. remove unnecessary code from icons
 1. improve focus styles
+1. make sure there are aria labels and screen reader experience is acceptable
