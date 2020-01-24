@@ -6,9 +6,34 @@ import { isAlbum } from '../lib/identifyCarouselItemType'
 import { SpotifyUri } from '../types'
 import { resourceLocation } from '../lib/uriParser'
 
+const PrimaryText = styled.p`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 1.125rem;
+  font-weight: bold;
+`
+
 const TileContainer = styled.a`
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.white};
+`
+
+const Thumbnail = styled.img`
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+`
+
+const ThumbnailContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.thumbnail};
+  padding-top: 100%;
+  position: relative;
+  margin-bottom: 1rem;
+`
+
+const SecondaryText = styled.p`
+  color: ${({ theme }) => theme.colors.gray};
 `
 
 interface TileProps {
@@ -28,9 +53,11 @@ const Tile: React.FC<TileProps> = ({ item }) => {
       <TileContainer
         onClick={e => navigateToResource(e, album.uri)}
         href={resourceLocation(album.uri)}>
-        <img src={album.images.large.url} alt="" />
-        <p>{album.name}</p>
-        <p>{album.artist.name}</p>
+        <ThumbnailContainer>
+          <Thumbnail src={album.images.large.url} alt="" />
+        </ThumbnailContainer>
+        <PrimaryText>{album.name}</PrimaryText>
+        <SecondaryText>{album.artist.name}</SecondaryText>
       </TileContainer>
     )
   }

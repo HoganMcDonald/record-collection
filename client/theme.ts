@@ -14,6 +14,7 @@ const theme = {
     progressBar: '#B620E0',
     icons: '#FFFFFF',
     inputs: '#121212',
+    thumbnail: '#1c1c1c',
   },
   typography: {
     baseFontSize: '16px',

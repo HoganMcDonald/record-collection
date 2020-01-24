@@ -6,12 +6,14 @@ import { AdvanceCarousel, RetreatCarousel } from './icons'
 import { ResetButton } from './styled'
 import Tile from './Tile'
 
+const COLUMNS = 4
+
 const CarouselContainer = styled.div``
 
 const ContentRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-column-gap: 1rem;
+  grid-template-columns: repeat(${COLUMNS}, 1fr);
+  grid-column-gap: 1.5rem;
 `
 
 const Control = styled(ResetButton)`
@@ -43,14 +45,14 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ items, title }) => {
   const [offset, setOffset] = React.useState<number>(0)
-  const currentItems = items.slice(offset, offset + 4)
+  const currentItems = items.slice(offset, offset + COLUMNS)
 
   function advanceOffset() {
-    setOffset(Math.min(offset + 4, items.length - 1))
+    setOffset(Math.min(offset + COLUMNS, items.length - 1))
   }
 
   function retreatOffset() {
-    setOffset(Math.max(offset - 4, 0))
+    setOffset(Math.max(offset - COLUMNS, 0))
   }
 
   React.useEffect(() => {

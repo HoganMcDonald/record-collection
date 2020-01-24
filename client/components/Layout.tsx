@@ -6,6 +6,7 @@ import PlayBar from './PlayBar'
 import Toasts from './Toasts'
 
 const FullScreenContainer = styled.div`
+  min-width: 1000px;
   width: 100vw;
   height: 100vh;
   display: grid;
