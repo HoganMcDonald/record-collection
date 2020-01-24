@@ -8,7 +8,7 @@ import Tile from './Tile'
 import { isArtist } from '../lib/identifyCarouselItemType'
 
 const CarouselContainer = styled.div`
-  margin-bottom: 1.5rem;
+  margin-bottom: 4rem;
 `
 
 const ContentRow = styled.div<{ columns: number }>`
