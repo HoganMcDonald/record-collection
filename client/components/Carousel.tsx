@@ -46,7 +46,7 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ items, title }) => {
   const [offset, setOffset] = React.useState<number>(0)
-  const columns = isArtist(items[0]) ? 6 : 4
+  const columns = isArtist(items[0]) ? 8 : 4
   const currentItems = items.slice(offset, offset + columns)
 
   function advanceOffset() {
