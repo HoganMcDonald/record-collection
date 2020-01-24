@@ -14,6 +14,9 @@ const Browse: React.FC = () => {
       {searchResults.albums.length > 0 && (
         <Carousel title="Albums" items={searchResults.albums} />
       )}
+      {searchResults.artists.length > 0 && (
+        <Carousel title="Artists" items={searchResults.artists} />
+      )}
     </Container>
   )
 }

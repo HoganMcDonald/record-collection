@@ -5,14 +5,15 @@ import { Album, Artist, Track } from './../types'
 import { AdvanceCarousel, RetreatCarousel } from './icons'
 import { ResetButton } from './styled'
 import Tile from './Tile'
+import { isArtist } from '../lib/identifyCarouselItemType'
 
-const COLUMNS = 4
+const CarouselContainer = styled.div`
+  margin-bottom: 1.5rem;
+`
 
-const CarouselContainer = styled.div``
-
-const ContentRow = styled.div`
+const ContentRow = styled.div<{ columns: number }>`
   display: grid;
-  grid-template-columns: repeat(${COLUMNS}, 1fr);
+  grid-template-columns: repeat(${({ columns }) => columns || 4}, 1fr);
   grid-column-gap: 1.5rem;
 `
 
@@ -45,34 +46,38 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ items, title }) => {
   const [offset, setOffset] = React.useState<number>(0)
-  const currentItems = items.slice(offset, offset + COLUMNS)
+  const columns = isArtist(items[0]) ? 6 : 4
+  const currentItems = items.slice(offset, offset + columns)
 
   function advanceOffset() {
-    setOffset(Math.min(offset + COLUMNS, items.length - 1))
+    setOffset(Math.min(offset + columns, items.length - 1))
   }
 
   function retreatOffset() {
-    setOffset(Math.max(offset - COLUMNS, 0))
+    setOffset(Math.max(offset - columns, 0))
   }
 
   React.useEffect(() => {
     setOffset(0)
   }, [items])
 
+  const retreatDisabled = offset === 0
+  const advanceDisabled = offset + columns > items.length
+
   return (
     <CarouselContainer>
       <TitleRow>
         <Title>{title}</Title>
         <Controls>
-          <Control onClick={retreatOffset}>
-            <RetreatCarousel disabled={offset === 0} />
+          <Control onClick={retreatOffset} disabled={retreatDisabled}>
+            <RetreatCarousel disabled={retreatDisabled} />
           </Control>
-          <Control onClick={advanceOffset}>
-            <AdvanceCarousel disabled={offset === items.length - 1} />
+          <Control onClick={advanceOffset} disabled={advanceDisabled}>
+            <AdvanceCarousel disabled={advanceDisabled} />
           </Control>
         </Controls>
       </TitleRow>
-      <ContentRow>
+      <ContentRow columns={columns}>
         {currentItems.map((item, i) => (
           <Tile item={item} key={i} />
         ))}

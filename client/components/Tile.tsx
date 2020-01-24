@@ -2,14 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { CarouselItem } from './Carousel'
-import { isAlbum } from '../lib/identifyCarouselItemType'
+import { isAlbum, isArtist } from '../lib/identifyCarouselItemType'
 import { SpotifyUri } from '../types'
 import { resourceLocation } from '../lib/uriParser'
 
 const PrimaryText = styled.p`
   color: ${({ theme }) => theme.colors.white};
-  font-size: 1.125rem;
+  font-size: 0.825rem;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 `
 
 const TileContainer = styled.a`
@@ -17,12 +22,12 @@ const TileContainer = styled.a`
 `
 
 const Thumbnail = styled.img`
-  width: 100%;
   max-width: 100%;
   max-height: 100%;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
 
 const ThumbnailContainer = styled.div`
@@ -34,6 +39,12 @@ const ThumbnailContainer = styled.div`
 
 const SecondaryText = styled.p`
   color: ${({ theme }) => theme.colors.gray};
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 `
 
 interface TileProps {
@@ -58,6 +69,18 @@ const Tile: React.FC<TileProps> = ({ item }) => {
         </ThumbnailContainer>
         <PrimaryText>{album.name}</PrimaryText>
         <SecondaryText>{album.artist.name}</SecondaryText>
+      </TileContainer>
+    )
+  } else if (isArtist(item)) {
+    const artist = item
+    return (
+      <TileContainer
+        onClick={e => navigateToResource(e, artist.uri)}
+        href={resourceLocation(artist.uri)}>
+        <ThumbnailContainer>
+          {artist.images && <Thumbnail src={artist.images.large.url} alt="" />}
+        </ThumbnailContainer>
+        <PrimaryText>{artist.name}</PrimaryText>
       </TileContainer>
     )
   }
