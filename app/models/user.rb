@@ -22,10 +22,9 @@ class User < ActiveRecord::Base
   end
 
   # my dirty secret...
-  def password=(password)
-  end
-  def password_confirmation=(password_confirmation)
-  end
+  def password=(password) end
+
+  def password_confirmation=(password_confirmation) end
 
   def default_collection
     Collection.where(user: self, default: true).first_or_create do |collection|
