@@ -2,6 +2,9 @@
 
 class User < ActiveRecord::Base
   extend Devise::Models
+
+  has_many :collections, dependent: :destroy
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise  :omniauthable, omniauth_providers: %i[spotify]
@@ -22,5 +25,13 @@ class User < ActiveRecord::Base
   def password=(password)
   end
   def password_confirmation=(password_confirmation)
+  end
+
+  def default_collection
+    Collection.where(user: self, default: true).first_or_create do |collection|
+      collection.user = self
+      collection.name = '__default_collection__'
+      collection.default = true
+    end
   end
 end
