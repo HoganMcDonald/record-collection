@@ -3,6 +3,9 @@
 class Collection < ActiveRecord::Base
   belongs_to :user
 
+  has_many :albums_collections
+  has_many :albums, through: :albums_collection
+
   validates :user_id, presence: true
   validates :name, presence: true
 
