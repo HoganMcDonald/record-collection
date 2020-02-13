@@ -75,7 +75,9 @@ class Spotify
 
     response = connection.post do |req|
       req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-      req.headers['Authorization'] = 'Basic ' + Base64.strict_encode64("#{ENV['SPOTIFY_KEY']}:#{ENV['SPOTIFY_SECRET']}")
+      req.headers['Authorization'] = 'Basic ' + Base64.strict_encode64(
+        "#{RecordCollection::SPOTIFY_CLIENT_ID}:#{RecordCollection::SPOTIFY_CLIENT_SECRET}"
+      )
       req.body = URI.encode_www_form(data)
     end
 
