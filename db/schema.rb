@@ -27,10 +27,9 @@ ActiveRecord::Schema.define(version: 2020_02_09_220712) do
   create_table "albums_collections", id: false, force: :cascade do |t|
     t.bigint "album_id", null: false
     t.bigint "collection_id", null: false
-    t.bigint "previous_id"
+    t.integer "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["previous_id"], name: "index_albums_collections_on_previous_id"
   end
 
   create_table "collections", force: :cascade do |t|
