@@ -73,10 +73,6 @@ GEM
       bcrypt (~> 3.0)
       devise (> 3.5.2, < 5)
       rails (>= 4.2.0, < 6.1)
-    dotenv (2.7.5)
-    dotenv-rails (2.7.5)
-      dotenv (= 2.7.5)
-      railties (>= 3.2, < 6.1)
     erubi (1.8.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
@@ -199,7 +195,6 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   devise_token_auth
-  dotenv-rails
   faraday
   faraday_middleware
   jbuilder (~> 2.7)
