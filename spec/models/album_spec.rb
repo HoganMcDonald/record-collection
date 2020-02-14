@@ -17,5 +17,14 @@ RSpec.describe Album, type: :model do
     it 'requires an artist_name' do
       expect(build(:album, artist_name: nil)).to be_invalid
     end
+
+    it 'requires a unique spotify uri' do
+      expect(
+        create(:album, spotify_uri: 'spotify:album:54DU59anGQsdrFP7utpshG')
+      ).to be_valid
+      expect(
+        build(:album, spotify_uri: 'spotify:album:54DU59anGQsdrFP7utpshG')
+      ).to be_invalid
+    end
   end
 end
