@@ -24,12 +24,14 @@ ActiveRecord::Schema.define(version: 2020_02_09_220712) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "albums_collections", id: false, force: :cascade do |t|
-    t.bigint "album_id", null: false
-    t.bigint "collection_id", null: false
+  create_table "albums_collections", force: :cascade do |t|
+    t.bigint "album_id"
+    t.bigint "collection_id"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["album_id"], name: "index_albums_collections_on_album_id"
+    t.index ["collection_id"], name: "index_albums_collections_on_collection_id"
   end
 
   create_table "collections", force: :cascade do |t|

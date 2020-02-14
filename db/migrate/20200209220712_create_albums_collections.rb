@@ -1,6 +1,8 @@
 class CreateAlbumsCollections < ActiveRecord::Migration[6.0]
   def change
-    create_join_table :albums, :collections do |t|
+    create_table :albums_collections do |t|
+      t.references :album
+      t.references :collection
       t.integer :position
 
       t.timestamps
