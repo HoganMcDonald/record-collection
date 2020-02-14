@@ -1,4 +1,5 @@
 class MissingAuthTokenError < StandardError; end
+class UnsupportedUriTypeError < StandardError; end
 
 class Spotify
   def initialize(user)
@@ -27,9 +28,32 @@ class Spotify
     get!("/search?q=#{q}&type=album,artist,track")
   end
 
+  def from_uri!(uri)
+    components = parse_uri(uri)
+
+    unless components.length == 3 && components.first == 'spotify'
+      raise UnsupportedUriTypeError, "Invalid URI provided \"#{uri}\""
+    end
+
+    if components[:entity] == 'album'
+      get!("/albums/#{components[:id]}")
+    else
+      raise UnsupportedUriTypeError,
+            "unable to find entity for uri #{components[:entity]}."
+    end
+  end
+
   private
 
-  SPOTIFY_BASE_URI = 'https://api.spotify.com/v1'.freeze
+  def parse_uri(uri)
+    components = uri.split ':'
+    {
+      entity: components[1],
+      id: components[2]
+    }
+  end
+
+  SPOTIFY_BASE_URL = 'https://api.spotify.com/v1'.freeze
 
   def client
     @client ||= Faraday.new do |conn|
@@ -40,7 +64,7 @@ class Spotify
   end
 
   def url(endpoint)
-    SPOTIFY_BASE_URI + endpoint
+    SPOTIFY_BASE_URL + endpoint
   end
 
   def get!(endpoint)
