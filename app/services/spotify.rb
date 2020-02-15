@@ -31,7 +31,7 @@ class Spotify
   def from_uri!(uri)
     components = parse_uri(uri)
 
-    unless components.length == 3 && components.first == 'spotify'
+    unless components[:entity].present? && components[:id].present?
       raise UnsupportedUriTypeError, "Invalid URI provided \"#{uri}\""
     end
 
