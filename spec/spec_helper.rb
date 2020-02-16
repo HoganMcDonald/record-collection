@@ -100,16 +100,24 @@ RSpec.configure do |config|
 
   # mock response bodies
   album_body = File.read('spec/support/fixtures/response_album_spotify:artist:2h93pZq0e7k5yf4dywlkpM.json')
+  player_body = File.read('spec/support/fixtures/response_player_me.json')
 
   config.before(:each) do
-    @album_get = stub_request(:get, /https:\/\/api.spotify.com\/v1\/albums\/[a-zA-Z0-9_]{22}/).
-      with(
-        headers: {
-          'Accept'=>'*/*',
-          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'Authorization'=>/Bearer [a-zA-Z0-9_]{120}/,
-          'User-Agent'=>'Faraday v0.15.4'
-        }).
-      to_return(status: 200, body: album_body, headers: {})
+    @request_headers = {
+      headers: {
+        'Accept'=>'*/*',
+        'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+        'Authorization'=>/Bearer [a-zA-Z0-9_]{120}/,
+        'User-Agent'=>'Faraday v0.15.4'
+      }
+    }
+
+    @player_get = stub_request(:get, 'https://api.spotify.com/v1/me/player')
+      .with(@request_headers)
+      .to_return(status: 200, body: player_body, headers: {})
+
+    @album_get = stub_request(:get, /https:\/\/api.spotify.com\/v1\/albums\/[a-zA-Z0-9_]{22}/)
+      .with(@request_headers)
+      .to_return(status: 200, body: album_body, headers: {})
   end
 end

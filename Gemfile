@@ -39,7 +39,7 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '4.0.0.beta3'
   gem 'webmock'
 end
 
