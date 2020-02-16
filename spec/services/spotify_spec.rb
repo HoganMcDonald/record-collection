@@ -61,10 +61,8 @@ RSpec.describe Spotify do
 
     describe '#seek!' do
       it 'seeks to the provided position' do
-        stub = stub_request(:put, 'https://api.spotify.com/v1/me/player/seek')
-               .with(query: { position_ms: 32_456 })
         @spotify_client.seek!(position_ms: 32_456)
-        expect(stub).to have_been_requested
+        expect(@player_position_ms).to have_been_requested
       end
 
       it 'raises an exception if no new position is provided' do

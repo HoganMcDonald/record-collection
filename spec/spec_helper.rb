@@ -112,12 +112,23 @@ RSpec.configure do |config|
       }
     }
 
+    @album_get = stub_request(:get, /https:\/\/api.spotify.com\/v1\/albums\/[a-zA-Z0-9_]{22}/)
+      .with(@request_headers)
+      .to_return(status: 200, body: album_body, headers: {})
+
     @player_get = stub_request(:get, 'https://api.spotify.com/v1/me/player')
       .with(@request_headers)
       .to_return(status: 200, body: player_body, headers: {})
 
-    @album_get = stub_request(:get, /https:\/\/api.spotify.com\/v1\/albums\/[a-zA-Z0-9_]{22}/)
+    @player_pause = stub_request(:put, 'https://api.spotify.com/v1/me/player/pause')
       .with(@request_headers)
-      .to_return(status: 200, body: album_body, headers: {})
+      .to_return(status: 204)
+
+    @player_play = stub_request(:put, 'https://api.spotify.com/v1/me/player/play')
+      .with(@request_headers)
+      .to_return(status: 204)
+
+    @player_position_ms = stub_request(:put, /https:\/\/api.spotify.com\/v1\/me\/player\/seek\?position_ms=[0-9]{1,10}/)
+      .with(@request_headers)
   end
 end

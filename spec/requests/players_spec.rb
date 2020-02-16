@@ -24,4 +24,21 @@ RSpec.describe PlayersController, type: :controller do
       expect { get :show }.to raise_exception Faraday::ClientError
     end
   end
+
+  context 'PUT #update' do
+    it 'pauses the player if pause parameter is passed' do
+      put :update, params: { player: { pause: true } }
+      expect(response).to have_http_status :no_content
+    end
+
+    it 'plays the player if play parameter is passed' do
+      put :update, params: { player: { play: true } }
+      expect(response).to have_http_status :no_content
+    end
+
+    it 'seeks player to position if position_ms parameter is passed' do
+      put :update, params: { player: { position_ms: 23_212 } }
+      expect(response).to have_http_status :no_content
+    end
+  end
 end
