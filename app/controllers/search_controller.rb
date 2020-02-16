@@ -13,6 +13,6 @@ class SearchController < ApplicationController
   end
 
   def search_params
-    params.permit(:q)
+    params.require(:q)
   end
 end

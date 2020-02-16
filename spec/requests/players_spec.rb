@@ -29,16 +29,25 @@ RSpec.describe PlayersController, type: :controller do
     it 'pauses the player if pause parameter is passed' do
       put :update, params: { player: { pause: true } }
       expect(response).to have_http_status :no_content
+      expect(@player_pause).to have_been_requested
+      expect(@player_play).not_to have_been_requested
+      expect(@player_position_ms).not_to have_been_requested
     end
 
     it 'plays the player if play parameter is passed' do
       put :update, params: { player: { play: true } }
       expect(response).to have_http_status :no_content
+      expect(@player_pause).not_to have_been_requested
+      expect(@player_play).to have_been_requested
+      expect(@player_position_ms).not_to have_been_requested
     end
 
     it 'seeks player to position if position_ms parameter is passed' do
       put :update, params: { player: { position_ms: 23_212 } }
       expect(response).to have_http_status :no_content
+      expect(@player_pause).not_to have_been_requested
+      expect(@player_play).not_to have_been_requested
+      expect(@player_position_ms).to have_been_requested
     end
   end
 end

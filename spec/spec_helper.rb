@@ -101,6 +101,7 @@ RSpec.configure do |config|
   # mock response bodies
   album_body = File.read('spec/support/fixtures/response_album_spotify:artist:2h93pZq0e7k5yf4dywlkpM.json')
   player_body = File.read('spec/support/fixtures/response_player_me.json')
+  search_body = File.read('spec/support/fixtures/response_search.json')
 
   config.before(:each) do
     @request_headers = {
@@ -130,5 +131,9 @@ RSpec.configure do |config|
 
     @player_position_ms = stub_request(:put, /https:\/\/api.spotify.com\/v1\/me\/player\/seek\?position_ms=[0-9]{1,10}/)
       .with(@request_headers)
+
+    @search = stub_request(:get, /https:\/\/api.spotify.com\/v1\/search\?q=\S*&type=album,artist,track/)
+      .with(@request_headers)
+      .to_return(status: 200, body: search_body, headers: {})
   end
 end
