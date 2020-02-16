@@ -102,7 +102,7 @@ RSpec.configure do |config|
   album_body = File.read('spec/support/fixtures/response_album_spotify:artist:2h93pZq0e7k5yf4dywlkpM.json')
 
   config.before(:each) do
-    stub_request(:get, /https:\/\/api.spotify.com\/v1\/albums\/[a-zA-Z0-9_]{22}/).
+    @album_get = stub_request(:get, /https:\/\/api.spotify.com\/v1\/albums\/[a-zA-Z0-9_]{22}/).
       with(
         headers: {
           'Accept'=>'*/*',

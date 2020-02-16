@@ -21,11 +21,15 @@ class Spotify
   end
 
   def seek!(data = {})
+    unless data[:position_ms].present?
+      raise ArgumentError, 'position_ms missing in query params'
+    end
+
     put!("/me/player/seek?#{data.to_query}")
   end
 
   def search!(q = '')
-    get!("/search?q=#{q}&type=album,artist,track")
+    get!("/search?q=#{ERB::Util.url_encode(q)}&type=album,artist,track")
   end
 
   def from_uri!(uri)
