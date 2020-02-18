@@ -13,6 +13,12 @@ export interface AuthToken {
   'token-type': 'Bearer'
 }
 
+export interface ApiCollection {
+  name: string
+  default: boolean
+  albums: Album[]
+}
+
 export interface ApiUser {
   email: string
   username: string
