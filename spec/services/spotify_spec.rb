@@ -123,5 +123,38 @@ RSpec.describe Spotify do
         expect { @spotify_client.from_uri!(uri) }.to raise_exception Faraday::ClientError
       end
     end
+
+    describe '#from_uris' do
+      def test_uris(count = 3)
+        uris = [
+          'spotify:album:653wRjqO0GOZPQPcXpeAXD',
+          'spotify:album:472GvzwE3EZ0i2EEaly5mX',
+          'spotify:album:16i5KnBjWgUtwOO7sVMnJB'
+        ]
+
+        (1..count).map { |index| uris[index % 3] }
+      end
+
+      it 'returns an array of albums when passed an array of uris' do
+        uris = test_uris
+        @spotify_client.from_uris!(uris)
+        expect(@albums_get).to have_been_requested
+      end
+
+      it 'raises an exception if uris don\'t all have same type' do
+        uris = test_uris.concat ['spotify:track:472GvzwE3EZ0i2EEaly5mX']
+        expect(uris.count).to eq 4
+        expect { @spotify_client.from_uri! uris }.to raise_exception MixedUriTypeError
+        expect(@albums_get).not_to have_been_requested
+      end
+
+      it 'executes requests in batches for multiple uris' do
+        uris = test_uris 60
+
+        results = @spotify_client.from_uris!(uris)
+        expect(@albums_get).to have_been_requested.times 3
+        expect(results.is_a?(Array)).to be true
+      end
+    end
   end
 end
