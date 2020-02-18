@@ -3,8 +3,8 @@
 class Collection < ActiveRecord::Base
   belongs_to :user
 
-  has_many :albums_collections
-  has_many :albums, -> { order 'albums_collections.position' }, through: :albums_collections
+  has_many :albums_collections, dependent: :destroy
+  has_many :albums, -> { order 'albums_collections.position' }, through: :albums_collections, dependent: :destroy
 
   validates :user_id, presence: true
   validates :name, presence: true
@@ -21,6 +21,10 @@ class Collection < ActiveRecord::Base
 
       albums_collections.create! album: album, position: albums_collections.count + 1
     end
+  end
+
+  def spotify_albums!
+    spotify_client.from_uris! albums.pluck(:spotify_uri)
   end
 
   private
