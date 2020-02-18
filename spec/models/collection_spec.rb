@@ -13,7 +13,7 @@ RSpec.describe Collection, type: :model do
     it 'doesn\'t allow for the creation of more than one default collection per user' do
       user = create(:user)
 
-      expect(create(:collection, user: user, default: true)).to be_valid
+      expect(Collection.where(user: user, default: true).count).to eq 1
       expect(create(:collection, user: user, default: true)).to be_invalid
     end
   end

@@ -4,6 +4,12 @@ class User < ActiveRecord::Base
   extend Devise::Models
 
   has_many :collections, dependent: :destroy
+  has_one :default_collection,
+    -> {
+      where(user: self, default: true)
+    },
+    inverse_of: :user,
+    class_name: 'Collection'
 
   after_create :create_default_collection
 
