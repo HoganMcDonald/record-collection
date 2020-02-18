@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   get '/me', to: 'users#me'
   get '/search', to: 'search#show'
   resource :player, only: [:show, :update]
-  resource :collection, only: [:show]
+  resource :collection, only: [:show, :update]
 end
