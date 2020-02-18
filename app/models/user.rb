@@ -3,7 +3,7 @@
 class User < ActiveRecord::Base
   extend Devise::Models
 
-  has_many :collections, dependent: :destroy
+  has_many :collections, dependent: :destroy #TODO: where not default
   has_one :default_collection,
     -> {
       where(user: self, default: true)
