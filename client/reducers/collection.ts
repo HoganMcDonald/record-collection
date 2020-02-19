@@ -1,5 +1,5 @@
 import { useApiRequests } from '../lib/apiHelpers'
-import { ApiCollection } from '../types'
+import { ApiCollection, SpotifyUri } from '../types'
 import { createSlice, PayloadAction } from 'redux-starter-kit'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../store'
@@ -30,7 +30,7 @@ const collectionsSlice = createSlice({
         fetching: true,
       },
     }),
-    failedGetCollection: state => ({
+    failedCollection: state => ({
       ...state,
       defaultCollection: { ...state.defaultCollection, fetching: false },
     }),
@@ -38,6 +38,13 @@ const collectionsSlice = createSlice({
       defaultCollection: {
         ...action.payload,
         fetching: false,
+      },
+    }),
+    beginAddToCollection: state => ({
+      ...state,
+      defaultCollection: {
+        ...state.defaultCollection,
+        fetching: true,
       },
     }),
   },
@@ -50,7 +57,7 @@ export const useCollections = () => {
   const defaultCollection = useSelector(
     (state: State) => state.collections.defaultCollection
   )
-  const { get } = useApiRequests()
+  const { get, put } = useApiRequests()
 
   const getDefaultCollection = async () => {
     try {
@@ -58,10 +65,21 @@ export const useCollections = () => {
       const collection: ApiCollection = await get('/collection')
       dispatch(collectionsSlice.actions.receiveCollection(collection))
     } catch (error) {
-      dispatch(collectionsSlice.actions.failedGetCollection())
+      dispatch(collectionsSlice.actions.failedCollection())
       console.error(error)
     }
   }
 
-  return { defaultCollection, getDefaultCollection }
+  const addToDefaultCollection = async (uri: SpotifyUri) => {
+    try {
+      dispatch(collectionsSlice.actions.beginAddToCollection())
+      const collection: ApiCollection = await put('/collection', { uri })
+      dispatch(collectionsSlice.actions.receiveCollection(collection))
+    } catch (error) {
+      dispatch(collectionsSlice.actions.failedCollection())
+      console.error(error)
+    }
+  }
+
+  return { defaultCollection, getDefaultCollection, addToDefaultCollection }
 }
