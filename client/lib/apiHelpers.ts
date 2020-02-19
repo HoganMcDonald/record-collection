@@ -42,6 +42,8 @@ export const useApiRequests = () => {
           throw new Error(addToast('Please sign in to continue.').message)
         case 500:
           throw new Error(addToast('Something went wrong!').message)
+        case 422:
+          throw new Error(addToast(body.errors[0]).message)
         default:
           throw new Error(body.errors.join(', '))
       }
