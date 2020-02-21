@@ -5,6 +5,7 @@ import authReducer, { Auth } from './reducers/auth'
 import playerReducer, { Player } from './reducers/player'
 import toastReducer, { Toasts } from './reducers/toast'
 import searchReducer, { SearchResults } from './reducers/search'
+import collectionsReducer, { Collections } from './reducers/collection'
 
 export type State = {
   auth: Auth
@@ -12,6 +13,7 @@ export type State = {
   player: Player
   toasts: Toasts
   search: SearchResults
+  collections: Collections
 }
 
 const store = configureStore({
@@ -21,6 +23,7 @@ const store = configureStore({
     player: playerReducer,
     toasts: toastReducer,
     search: searchReducer,
+    collections: collectionsReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 })

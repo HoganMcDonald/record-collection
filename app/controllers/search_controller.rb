@@ -2,7 +2,7 @@ class SearchController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    response = spotify_client.search! search_params[:q]
+    response = spotify_client.search! search_query
     @results = response.body
   end
 
@@ -12,7 +12,7 @@ class SearchController < ApplicationController
     @spotify_client ||= ::Spotify.new(@current_user)
   end
 
-  def search_params
-    params.permit(:q)
+  def search_query
+    params.require(:q)
   end
 end

@@ -2,6 +2,17 @@
 
 class User < ActiveRecord::Base
   extend Devise::Models
+
+  has_many :collections, dependent: :destroy #TODO: where not default
+  has_one :default_collection,
+    -> {
+      where(user: self, default: true)
+    },
+    inverse_of: :user,
+    class_name: 'Collection'
+
+  after_create :create_default_collection
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise  :omniauthable, omniauth_providers: %i[spotify]
@@ -19,8 +30,17 @@ class User < ActiveRecord::Base
   end
 
   # my dirty secret...
-  def password=(password)
-  end
-  def password_confirmation=(password_confirmation)
+  def password=(password) end
+
+  def password_confirmation=(password_confirmation) end
+
+  private
+
+  def create_default_collection
+    Collection.create!(
+      user: self,
+      default: true,
+      name: '__default_collection__'
+    )
   end
 end

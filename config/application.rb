@@ -38,7 +38,7 @@ module RecordCollection
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
 
-    config.middleware.use Rack::Cors do
+    config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
         resource '*',

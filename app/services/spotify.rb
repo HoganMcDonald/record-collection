@@ -1,4 +1,6 @@
 class MissingAuthTokenError < StandardError; end
+class UnsupportedUriTypeError < StandardError; end
+class MixedUriTypeError < StandardError; end
 
 class Spotify
   def initialize(user)
@@ -20,16 +22,72 @@ class Spotify
   end
 
   def seek!(data = {})
+    unless data[:position_ms].present?
+      raise ArgumentError, 'position_ms missing in query params'
+    end
+
     put!("/me/player/seek?#{data.to_query}")
   end
 
   def search!(q = '')
-    get!("/search?q=#{q}&type=album,artist,track")
+    get!("/search?q=#{ERB::Util.url_encode(q)}&type=album,artist,track")
   end
+
+  def from_uris!(uris)
+    entity, id, ids = nil, nil, nil
+
+    if uris.is_a?(Array)
+      entity = parse_uri!(uris.first)[:entity]
+      ids = uris.map { |uri|
+        parsed_uri = parse_uri! uri
+
+        raise MixedUriTypeError, "entity should be #{entity}, recieved uri: #{uri}" if parsed_uri[:entity] != entity
+
+        parsed_uri[:id]
+      }
+                .each_slice(20) # 20 is the limit for a single request
+                .to_a
+                .map { |id_list| id_list.join ',' }
+    else
+      components = parse_uri!(uris)
+      entity = components[:entity]
+      id = components[:id]
+    end
+
+    multi = !ids.nil?
+
+    if entity == 'album'
+      if multi
+        ids.reduce([]) do |acc, id_list|
+          response = get_albums! id_list
+          acc.concat response.body['albums']
+        end
+      else
+        get_album!(id)
+      end
+    else
+      raise UnsupportedUriTypeError,
+            "unable to fetch entity for uri #{components[:entity]}."
+    end
+  end
+  alias_method :from_uri!, :from_uris!
 
   private
 
-  SPOTIFY_BASE_URI = 'https://api.spotify.com/v1'.freeze
+  def parse_uri!(uri)
+    components = uri.split ':'
+
+    unless components.length == 3
+      raise UnsupportedUriTypeError, "Invalid URI provided \"#{uri}\""
+    end
+
+    {
+      entity: components[1],
+      id: components[2]
+    }
+  end
+
+  SPOTIFY_BASE_URL = 'https://api.spotify.com/v1'.freeze
 
   def client
     @client ||= Faraday.new do |conn|
@@ -40,7 +98,7 @@ class Spotify
   end
 
   def url(endpoint)
-    SPOTIFY_BASE_URI + endpoint
+    SPOTIFY_BASE_URL + endpoint
   end
 
   def get!(endpoint)
@@ -85,5 +143,13 @@ class Spotify
       spotify_access_token: response.body['access_token'],
       spotify_token_expires_at: Time.now + response.body['expires_in'].to_i)
     set_token!
+  end
+
+  def get_album!(id)
+    get!("/albums/#{id}")
+  end
+
+  def get_albums!(ids)
+    get!("/albums?ids=#{ids}")
   end
 end

@@ -27,6 +27,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+gem 'acts_as_list'
 gem 'devise_token_auth'
 gem 'faraday'
 gem 'faraday_middleware'
@@ -35,6 +36,11 @@ gem 'omniauth-spotify'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'capybara'
+  gem 'database_cleaner-active_record'
+  gem 'factory_bot_rails'
+  gem 'rspec-rails', '4.0.0.beta3'
+  gem 'webmock'
 end
 
 group :development do
