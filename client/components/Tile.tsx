@@ -5,6 +5,7 @@ import { CarouselItem } from './Carousel'
 import { isAlbum, isArtist } from '../lib/identifyCarouselItemType'
 import { SpotifyUri } from '../types'
 import { resourceLocation } from '../lib/uriParser'
+import { useCollections } from '../reducers/collection'
 
 const PrimaryText = styled.p`
   color: ${({ theme }) => theme.colors.white};
@@ -52,10 +53,13 @@ interface TileProps {
 }
 
 const Tile: React.FC<TileProps> = ({ item }) => {
+  const { addToDefaultCollection } = useCollections()
+
   function navigateToResource(event: React.MouseEvent, uri: SpotifyUri) {
     event.preventDefault()
     // TODO: Routing
     console.log(resourceLocation(uri))
+    addToDefaultCollection(uri)
   }
 
   if (isAlbum(item)) {
