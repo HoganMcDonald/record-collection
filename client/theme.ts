@@ -10,6 +10,7 @@ const theme = {
 
     background: '#11051B',
     sideBar: '#121212',
+    sideBarLink: '#1c1c1c',
     playBar: '#1c1c1c',
     progressBar: '#B620E0',
     icons: '#FFFFFF',
