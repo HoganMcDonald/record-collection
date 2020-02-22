@@ -16,16 +16,18 @@ export type State = {
   collections: Collections
 }
 
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-    auth: authReducer,
-    player: playerReducer,
-    toasts: toastReducer,
-    search: searchReducer,
-    collections: collectionsReducer,
-  },
-  devTools: process.env.NODE_ENV !== 'production',
-})
+const createStore = () => {
+  return configureStore({
+    reducer: {
+      user: userReducer,
+      auth: authReducer,
+      player: playerReducer,
+      toasts: toastReducer,
+      search: searchReducer,
+      collections: collectionsReducer,
+    },
+    devTools: process.env.NODE_ENV !== 'production',
+  })
+}
 
-export default store
+export default createStore

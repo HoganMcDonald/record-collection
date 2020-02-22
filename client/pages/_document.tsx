@@ -4,8 +4,13 @@ import { TypographyStyle, GoogleFont } from 'react-typography'
 import { ServerStyleSheet } from 'styled-components'
 
 import { typography } from '../theme'
+import { ReactElement } from 'react'
 
-export default class MyDocument extends Document {
+interface DocumentProps {
+  styleTags: ReactElement
+}
+
+export default class MyDocument extends Document<DocumentProps> {
   static getInitialProps({ renderPage }) {
     // Step 1: Create an instance of ServerStyleSheet
     const sheet = new ServerStyleSheet()
