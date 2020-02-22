@@ -3,7 +3,7 @@ class CollectionsController < ApplicationController
 
   def show
     @collection = @current_user.default_collection
-    @albums = @collection.spotify_albums!
+    @albums = @collection.spotify_albums! unless @collection.albums.empty?
   end
 
   def update
