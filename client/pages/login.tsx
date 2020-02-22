@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 
-import { Background } from '../components/styled'
+import { Background, PageStyles } from '../components/styled'
 import SpotifyLogo from '../components/SpotifyLogo'
 import Button from '../components/Button'
 import { apiUrl } from '../constants'
@@ -45,6 +45,7 @@ const Login: NextPage<LoginInitialProps> = ({ authToken }) => {
 
   return (
     <Background>
+      <PageStyles />
       <GlobalStyles />
       <h1>Log in to get started.</h1>
       <SignInButton label="Log in with Spotify" href={`${apiUrl}/auth/spotify`}>

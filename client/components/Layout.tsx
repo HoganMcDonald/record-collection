@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { useAuth } from '../reducers/auth'
 import { useUser } from '../reducers/users'
-import { Background } from './styled'
+import { Background, PageStyles } from './styled'
 import PlayBar from './PlayBar'
 import Toasts from './Toasts'
 import Sidebar from './Sidebar'
@@ -41,6 +41,7 @@ const Layout: React.FC = ({ children }) => {
 
   return (
     <FullScreenContainer>
+      <PageStyles />
       <Sidebar />
       <ScrollableBackground>{children}</ScrollableBackground>
       <PlayBar />

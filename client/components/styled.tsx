@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css, createGlobalStyle } from 'styled-components'
 
 export const Background = styled.div`
   height: 100%;
@@ -15,6 +15,17 @@ export const Container = styled.div`
   height: 100%;
   width: 100%;
   padding: 1.5rem;
+`
+
+export const PageStyles = createGlobalStyle`
+  body, html {
+    margin: 0;
+    height: 100%;
+  }
+
+  p {
+    margin: 0;
+  }
 `
 
 interface ResetButtonProps {
