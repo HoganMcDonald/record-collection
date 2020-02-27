@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PlayersController, type: :controller do
+RSpec.describe Api::PlayersController, type: :controller do
   login_user
 
   context 'GET #show' do

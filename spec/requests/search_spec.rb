@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SearchController, type: :controller do
+RSpec.describe Api::SearchController, type: :controller do
   login_user
 
   context 'GET #show ' do
