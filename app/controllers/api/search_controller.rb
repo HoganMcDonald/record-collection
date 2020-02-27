@@ -1,4 +1,4 @@
-class SearchController < ApplicationController
+class Api::SearchController < ApiController
   before_action :authenticate_user!
 
   def show

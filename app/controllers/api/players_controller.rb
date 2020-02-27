@@ -1,4 +1,4 @@
-class PlayersController < ApplicationController
+class Api::PlayersController < ApiController
   before_action :authenticate_user!
 
   def show

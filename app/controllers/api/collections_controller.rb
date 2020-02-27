@@ -1,4 +1,4 @@
-class CollectionsController < ApplicationController
+class Api::CollectionsController < ApiController
   before_action :authenticate_user!
 
   def show
