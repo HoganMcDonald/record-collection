@@ -2,7 +2,7 @@ json.name album['name']
 json.uri album['uri']
 
 json.artist do
-  json.partial! 'partials/artist', artist: album['artists'].first
+  json.partial! 'api/partials/artist', artist: album['artists'].first
 end
 
 json.images do
