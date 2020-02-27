@@ -22,4 +22,7 @@ const Collection: NextPage = () => {
   )
 }
 
+// not sure why this function definition is required, but won't compile without it.
+Collection.getInitialProps = async () => ({})
+
 export default Collection
