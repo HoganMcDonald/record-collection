@@ -10,13 +10,17 @@ export interface EphemeralUser {
 
 export type User = ApiUser & EphemeralUser
 
-const initialState: User = {
+const clearedState: User = {
   email: '',
   username: '',
   name: '',
   nickname: '',
   image: '',
   fetching: false,
+}
+
+const initialState: User = {
+  ...clearedState,
   ...window._redux_store.state.user,
 }
 
@@ -31,14 +35,18 @@ const userSlice = createSlice({
       ...action.payload,
       fetching: false,
     }),
+    resetUser: () => ({ ...clearedState }),
   },
 })
+
+export const logOut = userSlice.actions.resetUser
 
 export default userSlice.reducer
 
 export const useUser = () => {
   const dispatch = useDispatch()
   const user = useSelector((state: State) => state.user)
+  const loggedIn = useSelector((state: State) => !!state.user.email)
   const { get } = useApiRequests()
 
   const getMe = async () => {
@@ -52,5 +60,7 @@ export const useUser = () => {
     }
   }
 
-  return { user, getMe }
+  const logOut = () => dispatch(userSlice.actions.resetUser())
+
+  return { user, getMe, loggedIn, logOut }
 }

@@ -1,7 +1,11 @@
+import { useDispatch } from 'react-redux'
+
 import { apiNamespace } from '../constants'
 import { useToasts } from '../reducers/toast'
+import { logOut } from '../reducers/users'
 
 export const useApiRequests = () => {
+  const dispatch = useDispatch()
   const { addToast } = useToasts()
 
   const requestHeaders = () => {
@@ -18,6 +22,7 @@ export const useApiRequests = () => {
     if (body.errors || status >= 400) {
       switch (Math.min(status, 500)) {
         case 401:
+          dispatch(logOut())
           throw new Error(addToast('Please sign in to continue.').message)
         case 500:
           throw new Error(addToast('Something went wrong!').message)
