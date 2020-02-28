@@ -6,7 +6,10 @@ const Component: React.FC<{ name: string }> = ({ name }) => {
 
   return (
     <div>
-      {name} - {match.path}
+      <p>
+        {name} - {match.path}
+      </p>
+      <a href="/users/auth/spotify">sign in</a>
     </div>
   )
 }
