@@ -31,7 +31,7 @@ const Login: React.FC = () => {
     if (loggedIn) {
       history.push('/')
     }
-  }, [])
+  }, [loggedIn])
 
   return (
     <Background>
