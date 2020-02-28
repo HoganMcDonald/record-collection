@@ -1,24 +1,21 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 
 import Router from './components/Router'
+import store from './store'
 
-declare global {
-  interface Window {
-    _redux_store: {
-      state: object
-      clear: () => undefined
-    }
-  }
-}
-
-const Hello: React.FC = () => <Router />
+const App: React.FC = () => (
+  <Provider store={store}>
+    <Router />
+  </Provider>
+)
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log(window._redux_store.state)
   window._redux_store.clear()
   ReactDOM.render(
-    <Hello />,
+    <App />,
     document.body.appendChild(document.createElement('div'))
   )
 })

@@ -930,6 +930,18 @@
     webpack-cli "^3.3.10"
     webpack-sources "^1.4.3"
 
+"@reduxjs/toolkit@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-1.2.5.tgz#149aa62da12a18a67a30495cb63fd897003f2272"
+  integrity sha512-/OWoW5mniUXAomw4+3ZhhWodcs1/SRvK2HKyxLXdW6vKgmJhiBiSHe/huHARlKWujEmGaJrkafx548GE494bCQ==
+  dependencies:
+    immer "^4.0.1"
+    redux "^4.0.0"
+    redux-devtools-extension "^2.13.8"
+    redux-immutable-state-invariant "^2.1.0"
+    redux-thunk "^2.3.0"
+    reselect "^4.0.0"
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
@@ -6396,18 +6408,6 @@ redux-immutable-state-invariant@^2.1.0:
   dependencies:
     invariant "^2.1.0"
     json-stringify-safe "^5.0.1"
-
-redux-starter-kit@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/redux-starter-kit/-/redux-starter-kit-2.0.0.tgz#0201be9fdc89a8cfc089f136a48fa03a15a3530c"
-  integrity sha512-s/63wbRB1Az4pnTD36JtBld7C/Wrxu73Lckf3Je6RKHFk9GoIkJG5OfEZdMm6WukSPYoloKtkUjrWpF1gc/VgA==
-  dependencies:
-    immer "^4.0.1"
-    redux "^4.0.0"
-    redux-devtools-extension "^2.13.8"
-    redux-immutable-state-invariant "^2.1.0"
-    redux-thunk "^2.3.0"
-    reselect "^4.0.0"
 
 redux-thunk@^2.3.0:
   version "2.3.0"
