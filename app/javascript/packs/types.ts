@@ -1,7 +1,7 @@
 declare global {
   interface Window {
     _redux_store: {
-      state: {
+      state?: {
         user: ApiUser
         collections: {
           defaultCollection: ApiCollection

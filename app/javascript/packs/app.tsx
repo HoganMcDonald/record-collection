@@ -1,21 +1,23 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { ThemeProvider } from 'styled-components'
 
 import Router from './components/Router'
 import store from './store'
+import theme from './theme'
 
 const App: React.FC = () => (
   <Provider store={store}>
-    <Router />
+    <ThemeProvider theme={theme}>
+      <Router />
+    </ThemeProvider>
   </Provider>
 )
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log(window._redux_store.state)
-  window._redux_store.clear()
-  ReactDOM.render(
-    <App />,
-    document.body.appendChild(document.createElement('div'))
-  )
+  const rootElm = document.createElement('div')
+  rootElm.className = 'App'
+
+  ReactDOM.render(<App />, document.body.appendChild(rootElm))
 })

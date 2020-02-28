@@ -16,7 +16,9 @@ const initialState: Collections = {
     default: true,
     fetching: false,
     albums: [],
-    ...window._redux_store.state.collections.defaultCollection,
+    ...(window._redux_store.state.collections
+      ? window._redux_store.state.collections.defaultCollection
+      : {}),
   },
 }
 
