@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  root to: 'home#index'
-  get '/collection', to: 'home#index'
+  get '/login', to: 'home#index'
+
+  authenticated :user do
+    root to: 'home#index', as: :authenticated_root
+    get '/collection', to: 'home#index'
+  end
+
+  root to: redirect('/login')
 
   namespace :api do
     get '/me', to: 'users#me'
