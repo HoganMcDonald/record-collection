@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class User < ActiveRecord::Base
-  extend Devise::Models
-
   has_many :collections, dependent: :destroy #TODO: where not default
   has_one :default_collection,
     -> {
@@ -13,13 +11,13 @@ class User < ActiveRecord::Base
 
   after_create :create_default_collection
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise  :omniauthable, omniauth_providers: %i[spotify]
-  include DeviseTokenAuth::Concerns::User
+  devise :trackable, :omniauthable, omniauth_providers: %i[spotify]
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.spotify_access_token = auth.credentials.token
+      user.spotify_refresh_token = auth.credentials.refresh_token
+      user.spotify_token_expires_at = Time.at auth.credentials.expires_at
       user.provider = auth.provider
       user.uid = auth.uid
       user.email = auth.info.email
