@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'acts_as_list'
-gem 'devise_token_auth'
+gem 'devise'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'omniauth-spotify'
