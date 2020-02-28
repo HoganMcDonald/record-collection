@@ -1,46 +1,23 @@
 module Users
-  class OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
-    def omniauth_success
-      get_resource_from_auth_hash
-      set_token_on_resource
-      create_auth_params
+  class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+    def spotify
+      @user = User.from_omniauth(auth_hash)
 
-      @resource.spotify_access_token = auth_hash.credentials.token
-      @resource.spotify_refresh_token = auth_hash.credentials.refresh_token
-      @resource.spotify_token_expires_at = Time.at auth_hash.credentials.expires_at
-      sign_in(:user, @resource, store: false, bypass: false)
-      @resource.save!
-
-      yield @resource if block_given?
-
-      update_auth_header
-
-      redirect_to "#{RecordCollection::CLIENT_HOST}/login#{token_to_params}"
+      if @user.persisted?
+        sign_in_and_redirect @user, event: :authentication
+      else
+        redirect_to "/login?error=#{CGI.escape('Failed to sign in to Spotify.')}"
+      end
     end
 
     def failure
-      redirect_to "#{RecordCollection::CLIENT_HOST}/?error=#{CGI.escape('Unable to sign in due to Spotify error.')}"
+      redirect_to "/login?error=#{CGI.escape('Failed to sign in to Spotify.')}"
     end
 
     protected
 
-    def resource_class
-      User
-    end
-
     def auth_hash
       request.env["omniauth.auth"]
-    end
-
-    private
-
-    def token_to_params
-      [
-        "?uid=#{CGI.escape response.headers['uid']}",
-        "&expiry=#{response.headers['expiry']}",
-        "&client=#{CGI.escape response.headers['client']}",
-        "&access-token=#{CGI.escape response.headers['access-token']}",
-      ].join('')
     end
   end
 end
