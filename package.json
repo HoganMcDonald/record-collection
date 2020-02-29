@@ -15,6 +15,8 @@
     "react-typography": "^0.16.19",
     "redux": "^4.0.5",
     "styled-components": "^5.0.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.2",
     "typography": "^0.16.19",
     "use-debounce": "^3.3.0"
   },
@@ -27,8 +29,6 @@
     "@types/redux": "^3.6.0",
     "@types/styled-components": "^5.0.1",
     "@types/typography": "^0.16.3",
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.8.2",
     "webpack-dev-server": "^3.10.3"
   }
 }
