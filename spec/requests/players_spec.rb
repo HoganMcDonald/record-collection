@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Api::PlayersController, type: :controller do
+  before :each do
+    request.headers["accept"] = 'application/json'
+  end
+
   login_user
 
   context 'GET #show' do

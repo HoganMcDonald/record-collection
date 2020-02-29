@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Api::UsersController, type: :controller do
+  before :each do
+    request.headers["accept"] = 'application/json'
+  end
+
   context 'authenticated' do
     login_user
 
