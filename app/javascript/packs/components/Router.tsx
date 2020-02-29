@@ -2,6 +2,7 @@ import * as React from 'react'
 import { BrowserRouter, useRouteMatch, Switch, Route } from 'react-router-dom'
 
 import Login from '../pages/Login'
+import Home from '../pages/Index'
 
 const Component: React.FC<{ name: string }> = ({ name }) => {
   const match = useRouteMatch()
@@ -21,7 +22,7 @@ const Router: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact={true}>
-          <Component name="home" />
+          <Home />
         </Route>
         <Route path="/login">
           <Login />
