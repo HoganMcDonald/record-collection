@@ -33,6 +33,7 @@ const theme = {
       { name: 'Open Sans', styles: ['600', '600i'] },
       { name: 'Rubik', styles: ['400', '400i'] },
     ],
+    blockMarginBottom: 0,
   },
 }
 
