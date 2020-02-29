@@ -22,10 +22,6 @@ export const PageStyles = createGlobalStyle`
     margin: 0;
     height: 100%;
   }
-
-  p {
-    margin: 0;
-  }
 `
 
 interface ResetButtonProps {

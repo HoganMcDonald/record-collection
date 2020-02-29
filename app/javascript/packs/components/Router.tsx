@@ -3,19 +3,7 @@ import { BrowserRouter, useRouteMatch, Switch, Route } from 'react-router-dom'
 
 import Login from '../pages/Login'
 import Home from '../pages/Index'
-
-const Component: React.FC<{ name: string }> = ({ name }) => {
-  const match = useRouteMatch()
-
-  return (
-    <div>
-      <p>
-        {name} - {match.path}
-      </p>
-      <a href="/users/auth/spotify">sign in</a>
-    </div>
-  )
-}
+import Collection from '../pages/Collection'
 
 const Router: React.FC = () => {
   return (
@@ -28,7 +16,7 @@ const Router: React.FC = () => {
           <Login />
         </Route>
         <Route path="/collection">
-          <Component name="collection" />
+          <Collection />
         </Route>
       </Switch>
     </BrowserRouter>
