@@ -110,7 +110,7 @@ RSpec.configure do |config|
         'Accept'=>'*/*',
         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         'Authorization'=>/Bearer [a-zA-Z0-9_]{120}/,
-        'User-Agent'=>'Faraday v0.15.4'
+        'User-Agent'=>'Faraday v0.17.3'
       }
     }
 
