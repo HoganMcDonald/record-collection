@@ -23,7 +23,7 @@ class Api::PlayersController < ApiController
   private
 
   def spotify_client
-    @spotify_client ||= ::Spotify.new(@current_user)
+    @spotify_client ||= ::Spotify.new(current_user)
   end
 
   def update_params

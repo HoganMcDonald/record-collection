@@ -2,12 +2,12 @@ class Api::CollectionsController < ApiController
   before_action :authenticate_user!
 
   def show
-    @collection = @current_user.default_collection
+    @collection = current_user.default_collection
     @albums = @collection.spotify_albums! unless @collection.albums.empty?
   end
 
   def update
-    @collection = @current_user.default_collection
+    @collection = current_user.default_collection
 
     handle_new_album!
 

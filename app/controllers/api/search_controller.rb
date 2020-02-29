@@ -9,7 +9,7 @@ class Api::SearchController < ApiController
   private
 
   def spotify_client
-    @spotify_client ||= ::Spotify.new(@current_user)
+    @spotify_client ||= ::Spotify.new(current_user)
   end
 
   def search_query
