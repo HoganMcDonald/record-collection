@@ -24,14 +24,14 @@ const Browse: React.FC = () => {
 
   return (
     <BrowseContainer>
-      {searchResults.tracks.length > 0 && (
-        <SongTable title="Songs" tracks={searchResults.tracks} />
-      )}
       {searchResults.albums.length > 0 && (
         <Carousel title="Albums" items={searchResults.albums} />
       )}
       {searchResults.artists.length > 0 && (
         <Carousel title="Artists" items={searchResults.artists} />
+      )}
+      {searchResults.tracks.length > 0 && (
+        <SongTable title="Songs" tracks={searchResults.tracks} />
       )}
     </BrowseContainer>
   )
