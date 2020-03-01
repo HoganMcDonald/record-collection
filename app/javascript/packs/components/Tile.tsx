@@ -59,7 +59,12 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
   const { addToDefaultCollection } = useCollections()
   const { addToast } = useToasts()
 
+  const [loaded, setLoaded] = React.useState<boolean>(false)
   const [showActions, setShowActions] = React.useState<boolean>(false)
+
+  React.useEffect(() => {
+    setLoaded(false)
+  }, [item])
 
   function navigateToResource(event: React.MouseEvent, uri: SpotifyUri) {
     event.preventDefault()
@@ -82,7 +87,12 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
         onMouseLeave={() => setShowActions(false)}
         href={resourceLocation(album.uri)}>
         <ThumbnailContainer>
-          <Thumbnail src={album.images.large.url} alt="" />
+          <Thumbnail
+            src={album.images.large.url}
+            alt=""
+            hidden={!loaded}
+            onLoad={() => setLoaded(true)}
+          />
           {showActions && (
             <TileActionButton onAddToCollection={handleAddToCollection} />
           )}
@@ -98,7 +108,14 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
         onClick={e => navigateToResource(e, artist.uri)}
         href={resourceLocation(artist.uri)}>
         <ThumbnailContainer>
-          {artist.images && <Thumbnail src={artist.images.large.url} alt="" />}
+          {artist.images && (
+            <Thumbnail
+              src={artist.images.large.url}
+              alt=""
+              hidden={!loaded}
+              onLoad={() => setLoaded(true)}
+            />
+          )}
         </ThumbnailContainer>
         <PrimaryText>{artist.name}</PrimaryText>
       </TileContainer>
