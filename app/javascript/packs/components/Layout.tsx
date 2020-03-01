@@ -19,6 +19,11 @@ const FullScreenContainer = styled.div`
 
 const HeaderContainer = styled(Container)`
   background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.white};
+
+  h1 {
+    margin: 0;
+  }
 `
 
 const ScrollableBackground = styled(Background)`
