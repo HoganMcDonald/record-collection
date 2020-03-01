@@ -2,7 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { useUser } from '../reducers/users'
-import { Background, PageStyles } from './styled'
+import { Background, PageStyles, Container } from './styled'
 import PlayBar from './PlayBar'
 import Toasts from './Toasts'
 import Sidebar from './Sidebar'
@@ -14,7 +14,16 @@ const FullScreenContainer = styled.div`
   height: 100vh;
   display: grid;
   grid-template-columns: 230px 1fr;
-  grid-template-rows: 1fr 60px;
+  grid-template-rows: auto 1fr 60px;
+`
+
+const HeaderContainer = styled(Container)`
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.white};
+
+  h1 {
+    margin: 0;
+  }
 `
 
 const ScrollableBackground = styled(Background)`
@@ -22,7 +31,11 @@ const ScrollableBackground = styled(Background)`
   overflow-y: scroll;
 `
 
-const Layout: React.FC = ({ children }) => {
+interface LayoutProps {
+  Header?: React.ComponentType
+}
+
+const Layout: React.FC<LayoutProps> = ({ children, Header }) => {
   const { getMe, loggedIn } = useUser()
   const { getDefaultCollection } = useCollections()
 
@@ -37,6 +50,9 @@ const Layout: React.FC = ({ children }) => {
     <FullScreenContainer>
       <PageStyles />
       <Sidebar />
+      <HeaderContainer>
+        <Header />
+      </HeaderContainer>
       <ScrollableBackground>{children}</ScrollableBackground>
       <PlayBar />
       <Toasts />
