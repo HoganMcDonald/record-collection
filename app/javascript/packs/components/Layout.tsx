@@ -18,7 +18,6 @@ const FullScreenContainer = styled.div`
 `
 
 const HeaderContainer = styled(Container)`
-  padding-bottom: 0;
   background-color: ${({ theme }) => theme.colors.background};
 `
 
