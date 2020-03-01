@@ -12,7 +12,7 @@ const Collection: React.FC = () => {
     <Layout>
       <Container>
         <h1>All Albums</h1>
-        <Grid albums={defaultCollection.albums} />
+        <Grid albums={defaultCollection.albums} disableAddToCollection={true} />
       </Container>
     </Layout>
   )
