@@ -61,6 +61,7 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
 
   const [loaded, setLoaded] = React.useState<boolean>(false)
   const [showActions, setShowActions] = React.useState<boolean>(false)
+  const image = React.useRef(null)
 
   React.useEffect(() => {
     setLoaded(false)
@@ -70,6 +71,12 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
     event.preventDefault()
     // TODO: Routing
     console.log(resourceLocation(uri))
+  }
+
+  const handleImageLoaded = () => {
+    if (!loaded) {
+      setLoaded(true)
+    }
   }
 
   const handleAddToCollection = () => {
@@ -90,8 +97,9 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
           <Thumbnail
             src={album.images.large.url}
             alt=""
+            onLoad={handleImageLoaded}
             hidden={!loaded}
-            onLoad={() => setLoaded(true)}
+            ref={image}
           />
           {showActions && (
             <TileActionButton onAddToCollection={handleAddToCollection} />
@@ -113,7 +121,8 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
               src={artist.images.large.url}
               alt=""
               hidden={!loaded}
-              onLoad={() => setLoaded(true)}
+              onLoad={handleImageLoaded}
+              ref={image}
             />
           )}
         </ThumbnailContainer>
