@@ -1,5 +1,6 @@
 json.name track['name']
 json.uri track['uri']
+json.duration track['duration_ms']
 
 json.artist do
   json.partial! 'api/partials/artist', artist: track['artists'].first

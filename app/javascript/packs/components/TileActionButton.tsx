@@ -14,7 +14,18 @@ const Container = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 1px 1px 12px -3px ${({ theme }) => theme.colors.sideBar};
   color: ${({ theme }) => theme.colors.accent};
+  transition: box-shadow 120ms ease-out, color 120ms ease-out;
+
+  &:hover {
+    box-shadow: 1px 3px 12px -3px ${({ theme }) => theme.colors.sideBar};
+    color: white;
+  }
+
+  &:active {
+    color: ${({ theme }) => theme.colors.accent};
+  }
 `
 
 interface TileActionButtonProps {
