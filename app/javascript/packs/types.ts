@@ -85,4 +85,5 @@ export interface Track {
   name: string
   artist: Artist
   album: Album
+  duration: number
 }
