@@ -34,7 +34,7 @@ const TitleRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.625rem;
+  margin-bottom: 0.75rem;
 `
 
 export type CarouselItem = Album | Artist | Track
