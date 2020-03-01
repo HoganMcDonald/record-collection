@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled, { css } from 'styled-components'
 
 import { Track } from '../types'
+import { msToTime } from '../lib/helpers'
 
 const PADDING = '0.5rem 0.8rem 0.4rem'
 
@@ -84,7 +85,7 @@ const SongTableRow: React.FC<{ track: Track }> = ({ track }) => {
       <BodyCell hover={hover}>{track.name}</BodyCell>
       <BodyCell hover={hover}>{track.artist.name}</BodyCell>
       <BodyCell hover={hover}>{track.album.name}</BodyCell>
-      <BodyCell hover={hover}>3:22</BodyCell>
+      <BodyCell hover={hover}>{msToTime(track.duration)}</BodyCell>
     </BodyRow>
   )
 }
