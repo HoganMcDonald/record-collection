@@ -3,7 +3,7 @@ FactoryBot.define do
     def login_user
       before(:each) do
         @current_user = FactoryBot.create(:user, :authed)
-        request.headers.merge! @current_user.create_new_auth_token
+        sign_in @current_user
       end
     end
   end

@@ -30,7 +30,7 @@ const ExternalLinkContainer = styled.a`
 interface ButtonProps {
   label: string
   className?: string
-  onClick?: () => void
+  onClick?: (event: React.MouseEvent) => void
   href?: string
 }
 

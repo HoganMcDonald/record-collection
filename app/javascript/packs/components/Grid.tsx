@@ -13,13 +13,18 @@ const GridContainer = styled.div`
 
 interface GridProps {
   albums: Album[]
+  disableAddToCollection?: boolean
 }
 
-const Grid: React.FC<GridProps> = ({ albums }) => {
+const Grid: React.FC<GridProps> = ({ albums, disableAddToCollection }) => {
   return (
     <GridContainer>
       {albums.map((album, index) => (
-        <Tile item={album} key={index} />
+        <Tile
+          item={album}
+          key={index}
+          disableAddToCollection={disableAddToCollection}
+        />
       ))}
     </GridContainer>
   )

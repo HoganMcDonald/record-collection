@@ -80,7 +80,7 @@ export const useCollections = () => {
       dispatch(collectionsSlice.actions.receiveCollection(collection))
     } catch (error) {
       dispatch(collectionsSlice.actions.failedCollection())
-      console.error(error)
+      throw error
     }
   }
 
