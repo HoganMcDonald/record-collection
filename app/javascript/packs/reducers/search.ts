@@ -45,7 +45,7 @@ export const useSearch = () => {
   const search = async (searchTerm: string) => {
     try {
       const searchQuery = encodeSearchTerms(searchTerm)
-      dispatch(searchSlice.actions.beginSearch())
+      dispatch(searchSlice.actions.beginSearch(searchTerm))
       const searchResults: ApiSearchResults = await get(
         `/search?q=${searchQuery}`
       )
