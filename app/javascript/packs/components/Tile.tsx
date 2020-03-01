@@ -1,5 +1,5 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { CarouselItem } from './Carousel'
 import { isAlbum, isArtist } from '../lib/identifyCarouselItemType'
@@ -33,11 +33,18 @@ const Thumbnail = styled.img`
   transform: translate(-50%, -50%);
 `
 
-const ThumbnailContainer = styled.div`
+const artistThumbnailStyles = css`
+  border-radius: 999px;
+  overflow: hidden;
+`
+
+const ThumbnailContainer = styled.div<{ circle?: boolean }>`
   background-color: ${({ theme }) => theme.colors.thumbnail};
   padding-top: 100%;
   position: relative;
   margin-bottom: 1rem;
+
+  ${({ circle }) => circle && artistThumbnailStyles}
 `
 
 const SecondaryText = styled.p`
@@ -115,7 +122,7 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
       <TileContainer
         onClick={e => navigateToResource(e, artist.uri)}
         href={resourceLocation(artist.uri)}>
-        <ThumbnailContainer>
+        <ThumbnailContainer circle={true}>
           {artist.images && (
             <Thumbnail
               src={artist.images.large.url}
