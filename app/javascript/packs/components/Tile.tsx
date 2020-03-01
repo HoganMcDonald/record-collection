@@ -20,6 +20,10 @@ const PrimaryText = styled.p`
   -webkit-line-clamp: 1;
 `
 
+const ArtistTitle = styled(PrimaryText)`
+  text-align: center;
+`
+
 const TileContainer = styled.a`
   text-decoration: none;
 `
@@ -133,7 +137,7 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
             />
           )}
         </ThumbnailContainer>
-        <PrimaryText>{artist.name}</PrimaryText>
+        <ArtistTitle>{artist.name}</ArtistTitle>
       </TileContainer>
     )
   }
