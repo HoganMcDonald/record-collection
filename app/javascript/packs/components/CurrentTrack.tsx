@@ -59,11 +59,7 @@ const CurrentTrack: React.FC<CurrentTrackProps> = ({
     <CurrentTrackContainer>
       {albumName && (
         <>
-          <AlbumCover
-            playing={isPlaying}
-            src={albumCover}
-            alt={`Cover art for: ${albumName} by ${artistName}`}
-          />
+          <AlbumCover playing={isPlaying} src={albumCover} />
           <TrackInfo>
             <TrackName>{trackName}</TrackName>
             <ArtistName>{artistName}</ArtistName>
