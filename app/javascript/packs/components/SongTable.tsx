@@ -28,9 +28,17 @@ const BodyRow = styled.tr`
   padding-bottom: 0.25rem;
 `
 
-const HeaderCell = styled.td`
+const HeaderCell = styled.td<{ sorted?: boolean }>`
   user-select: none;
   padding: ${PADDING};
+
+  ${({ sorted, theme }) =>
+    sorted === true || sorted === false
+      ? css`
+          cursor: pointer;
+          color: ${sorted ? theme.colors.accent : theme.colors.white};
+        `
+      : null};
 `
 
 const SongTableContainer = styled.div`
@@ -90,12 +98,56 @@ const SongTableRow: React.FC<{ track: Track }> = ({ track }) => {
   )
 }
 
+type SortKeys = 'artist' | 'title' | 'album' | null
+
 interface SongTableProps {
   title: string
   tracks: Track[]
 }
 
 const SongTable: React.FC<SongTableProps> = ({ title, tracks }) => {
+  const unsortedTracks = React.useRef(tracks)
+  const [sortKey, setSortKey] = React.useState<SortKeys>(null)
+  const [sortDirection, setSortDirection] = React.useState<'asc' | 'desc'>(
+    'asc'
+  )
+
+  const handleSetSort = (key: SortKeys) => {
+    if (sortKey === key) {
+      sortDirection === 'asc' ? setSortDirection('desc') : setSortKey(null)
+    } else {
+      setSortKey(key)
+      setSortDirection('asc')
+    }
+  }
+
+  const songs = [...unsortedTracks.current].sort((a, b) => {
+    const locale = 'en'
+    const options: Intl.CollatorOptions = { ignorePunctuation: true }
+
+    const first = sortDirection === 'asc' ? a : b
+    const second = sortDirection === 'desc' ? a : b
+
+    switch (sortKey) {
+      case 'artist':
+        return first.artist.name.localeCompare(
+          second.artist.name,
+          locale,
+          options
+        )
+      case 'title':
+        return first.name.localeCompare(second.name, locale, options)
+      case 'album':
+        return first.album.name.localeCompare(
+          second.album.name,
+          locale,
+          options
+        )
+      default:
+        return 0
+    }
+  })
+
   return (
     <SongTableContainer>
       <Title>{title}</Title>
@@ -103,14 +155,26 @@ const SongTable: React.FC<SongTableProps> = ({ title, tracks }) => {
         <thead>
           <tr>
             <ThumbnailHeader />
-            <TitleHeader>Title</TitleHeader>
-            <ArtistHeader>Artist</ArtistHeader>
-            <AlbumHeader>Album</AlbumHeader>
+            <TitleHeader
+              sorted={sortKey === 'title'}
+              onClick={() => handleSetSort('title')}>
+              Title
+            </TitleHeader>
+            <ArtistHeader
+              sorted={sortKey === 'artist'}
+              onClick={() => handleSetSort('artist')}>
+              Artist
+            </ArtistHeader>
+            <AlbumHeader
+              sorted={sortKey === 'album'}
+              onClick={() => handleSetSort('album')}>
+              Album
+            </AlbumHeader>
             <DurationHeader>Duration</DurationHeader>
           </tr>
         </thead>
         <tbody>
-          {tracks.map((track, index) => (
+          {songs.map((track, index) => (
             <SongTableRow key={index} track={track} />
           ))}
         </tbody>
