@@ -19,7 +19,7 @@ const Router: React.FC = () => {
         <Route path="/collection">
           <Collection />
         </Route>
-        <Route path="/album/:album_id" exact={true}>
+        <Route path="/album/:albumId" exact={true}>
           <Album />
         </Route>
       </Switch>
