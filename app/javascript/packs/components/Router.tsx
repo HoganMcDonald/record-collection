@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { BrowserRouter, useRouteMatch, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, useParams, Switch, Route } from 'react-router-dom'
 
 import Login from '../pages/Login'
 import Home from '../pages/Index'
 import Collection from '../pages/Collection'
+import Album from '../pages/Album'
 
 const Router: React.FC = () => {
   return (
@@ -17,6 +18,9 @@ const Router: React.FC = () => {
         </Route>
         <Route path="/collection">
           <Collection />
+        </Route>
+        <Route path="/album/:album_id" exact={true}>
+          <Album />
         </Route>
       </Switch>
     </BrowserRouter>

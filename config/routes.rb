@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   authenticated :user do
     root to: 'home#index', as: :authenticated_root
     get '/collection', to: 'home#index'
+    get '/album/:album_id', to: 'home#index'
   end
 
   root to: redirect('/login')
