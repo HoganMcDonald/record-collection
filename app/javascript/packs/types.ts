@@ -19,6 +19,10 @@ export interface Album {
   images: SpotifyImages
 }
 
+export type AlbumDetail = Album & {
+  tracks: Track[]
+}
+
 export interface ApiCollection {
   name: string
   default: boolean
