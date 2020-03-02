@@ -112,6 +112,10 @@ const SongTable: React.FC<SongTableProps> = ({ title, tracks }) => {
     'asc'
   )
 
+  React.useEffect(() => {
+    unsortedTracks.current = tracks
+  }, [tracks])
+
   const handleSetSort = (key: SortKeys) => {
     if (sortKey === key) {
       sortDirection === 'asc' ? setSortDirection('desc') : setSortKey(null)
