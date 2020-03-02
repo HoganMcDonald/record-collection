@@ -8,6 +8,7 @@ import { resourceLocation } from '../lib/uriParser'
 import { useCollections } from '../reducers/collection'
 import TileActionButton from './TileActionButton'
 import { useToasts } from '../reducers/toast'
+import LazyImage from './LazyImage'
 
 const PrimaryText = styled.p`
   color: ${({ theme }) => theme.colors.white};
@@ -28,24 +29,12 @@ const TileContainer = styled.a`
   text-decoration: none;
 `
 
-const Thumbnail = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`
-
 const artistThumbnailStyles = css`
   border-radius: 999px;
   overflow: hidden;
 `
 
-const ThumbnailContainer = styled.div<{ circle?: boolean }>`
-  background-color: ${({ theme }) => theme.colors.thumbnail};
-  padding-top: 100%;
-  position: relative;
+const Thumbnail = styled(LazyImage)<{ circle?: boolean }>`
   margin-bottom: 1rem;
 
   ${({ circle }) => circle && artistThumbnailStyles}
@@ -70,24 +59,12 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
   const { addToDefaultCollection } = useCollections()
   const { addToast } = useToasts()
 
-  const [loaded, setLoaded] = React.useState<boolean>(false)
   const [showActions, setShowActions] = React.useState<boolean>(false)
-  const image = React.useRef(null)
-
-  React.useEffect(() => {
-    setLoaded(false)
-  }, [item])
 
   function navigateToResource(event: React.MouseEvent, uri: SpotifyUri) {
     event.preventDefault()
     // TODO: Routing
     console.log(resourceLocation(uri))
-  }
-
-  const handleImageLoaded = () => {
-    if (!loaded) {
-      setLoaded(true)
-    }
   }
 
   const handleAddToCollection = () => {
@@ -104,18 +81,11 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
         onMouseEnter={() => setShowActions(!disableAddToCollection && true)}
         onMouseLeave={() => setShowActions(false)}
         href={resourceLocation(album.uri)}>
-        <ThumbnailContainer>
-          <Thumbnail
-            src={album.images.large.url}
-            alt=""
-            onLoad={handleImageLoaded}
-            hidden={!loaded}
-            ref={image}
-          />
+        <Thumbnail src={album.images.large.url} alt="">
           {showActions && (
             <TileActionButton onAddToCollection={handleAddToCollection} />
           )}
-        </ThumbnailContainer>
+        </Thumbnail>
         <PrimaryText>{album.name}</PrimaryText>
         <SecondaryText>{album.artist.name}</SecondaryText>
       </TileContainer>
@@ -126,17 +96,7 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
       <TileContainer
         onClick={e => navigateToResource(e, artist.uri)}
         href={resourceLocation(artist.uri)}>
-        <ThumbnailContainer circle={true}>
-          {artist.images && (
-            <Thumbnail
-              src={artist.images.large.url}
-              alt=""
-              hidden={!loaded}
-              onLoad={handleImageLoaded}
-              ref={image}
-            />
-          )}
-        </ThumbnailContainer>
+        <Thumbnail src={artist.images && artist.images.large.url} alt="" />
         <ArtistTitle>{artist.name}</ArtistTitle>
       </TileContainer>
     )

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 
 import { Track } from '../types'
 import { msToTime } from '../lib/helpers'
+import LazyImage from './LazyImage'
 
 const PADDING = '0.5rem 0.8rem 0.4rem'
 
@@ -24,8 +25,10 @@ const BodyCell = styled.td<{ hover?: boolean }>`
 `
 
 const BodyRow = styled.tr`
+  height: 2.5rem;
   cursor: pointer;
   padding-bottom: 0.25rem;
+  box-sizing: border-box;
 `
 
 const HeaderCell = styled.td<{ sorted?: boolean }>`
@@ -45,11 +48,8 @@ const SongTableContainer = styled.div`
   margin-bottom: 4rem;
 `
 
-const Thumbnail = styled.img`
+const Thumbnail = styled(LazyImage)`
   width: 2.5rem;
-  min-width: 2.5rem;
-  margin: 0;
-  line-height: 0;
 `
 
 const Title = styled.h2`
@@ -77,7 +77,7 @@ const TitleHeader = styled(HeaderCell)`
 `
 
 const ThumbnailCell = styled(BodyCell)`
-  padding: 0.2rem 0;
+  padding: 0.2rem 2rem 0;
 `
 
 const SongTableRow: React.FC<{ track: Track }> = ({ track }) => {
@@ -88,7 +88,7 @@ const SongTableRow: React.FC<{ track: Track }> = ({ track }) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}>
       <ThumbnailCell>
-        <Thumbnail src={track.album.images.small.url} />
+        <Thumbnail src={track.album.images.small.url} alt="" />
       </ThumbnailCell>
       <BodyCell hover={hover}>{track.name}</BodyCell>
       <BodyCell hover={hover}>{track.artist.name}</BodyCell>
@@ -106,14 +106,13 @@ interface SongTableProps {
 }
 
 const SongTable: React.FC<SongTableProps> = ({ title, tracks }) => {
-  const unsortedTracks = React.useRef(tracks)
   const [sortKey, setSortKey] = React.useState<SortKeys>(null)
   const [sortDirection, setSortDirection] = React.useState<'asc' | 'desc'>(
     'asc'
   )
 
   React.useEffect(() => {
-    unsortedTracks.current = tracks
+    setSortKey(null)
   }, [tracks])
 
   const handleSetSort = (key: SortKeys) => {
@@ -125,7 +124,7 @@ const SongTable: React.FC<SongTableProps> = ({ title, tracks }) => {
     }
   }
 
-  const songs = [...unsortedTracks.current].sort((a, b) => {
+  const songs = [...tracks].sort((a, b) => {
     const locale = 'en'
     const options: Intl.CollatorOptions = { ignorePunctuation: true }
 
