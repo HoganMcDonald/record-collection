@@ -77,7 +77,6 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
     const album = item
     return (
       <TileContainer
-        onClick={e => navigateToResource(e, album.uri)}
         onMouseEnter={() => setShowActions(!disableAddToCollection && true)}
         onMouseLeave={() => setShowActions(false)}
         href={resourceLocation(album.uri)}>
@@ -93,9 +92,7 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
   } else if (isArtist(item)) {
     const artist = item
     return (
-      <TileContainer
-        onClick={e => navigateToResource(e, artist.uri)}
-        href={resourceLocation(artist.uri)}>
+      <TileContainer href={resourceLocation(artist.uri)}>
         <Thumbnail src={artist.images && artist.images.large.url} alt="" />
         <ArtistTitle>{artist.name}</ArtistTitle>
       </TileContainer>
