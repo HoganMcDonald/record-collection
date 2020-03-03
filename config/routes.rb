@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   namespace :api do
     get '/me', to: 'users#me'
     get '/search', to: 'search#show'
+    get '/album/:spotify_id', to: 'albums#show'
     resource :player, only: [:show, :update]
     resource :collection, only: [:show, :update]
   end
