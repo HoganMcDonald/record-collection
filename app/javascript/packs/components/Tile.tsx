@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 import { CarouselItem } from './Carousel'
 import { isAlbum, isArtist } from '../lib/identifyCarouselItemType'
@@ -25,7 +26,7 @@ const ArtistTitle = styled(PrimaryText)`
   text-align: center;
 `
 
-const TileContainer = styled.a`
+const TileContainer = styled(Link)`
   text-decoration: none;
 `
 
@@ -79,7 +80,7 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
       <TileContainer
         onMouseEnter={() => setShowActions(!disableAddToCollection && true)}
         onMouseLeave={() => setShowActions(false)}
-        href={resourceLocation(album.uri)}>
+        to={resourceLocation(album.uri)}>
         <Thumbnail src={album.images.large.url} alt="">
           {showActions && (
             <TileActionButton onAddToCollection={handleAddToCollection} />
@@ -92,7 +93,7 @@ const Tile: React.FC<TileProps> = ({ item, disableAddToCollection }) => {
   } else if (isArtist(item)) {
     const artist = item
     return (
-      <TileContainer href={resourceLocation(artist.uri)}>
+      <TileContainer to={resourceLocation(artist.uri)}>
         <Thumbnail src={artist.images && artist.images.large.url} alt="" />
         <ArtistTitle>{artist.name}</ArtistTitle>
       </TileContainer>
