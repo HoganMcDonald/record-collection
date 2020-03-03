@@ -6,6 +6,9 @@ declare global {
         collections: {
           defaultCollection: ApiCollection
         }
+        albums?: {
+          albums: AlbumDetail[]
+        }
       }
       clear: () => undefined
     }

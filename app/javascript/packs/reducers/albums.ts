@@ -14,7 +14,10 @@ export type Albums = {
 }
 
 const initialState: Albums = {
-  albums: [],
+  albums: window._redux_store.state.albums
+    ? window._redux_store.state.albums.albums
+    : [],
+  // albums: [],
   fetching: false,
 }
 

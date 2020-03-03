@@ -19,9 +19,28 @@ class ApplicationController < ActionController::Base
           )
         )
       }
+
+      if params[:album_id].present?
+        @album = spotify_client.from_uri!("spotify:album:#{params[:album_id]}").body
+        initial_state[:albums] = {
+          albums: [
+            JSON.parse(
+              render_to_string(
+                template: 'api/albums/show'
+              )
+            )
+          ]
+        }
+      end
     end
 
     initial_state.to_json
   end
   helper_method :redux_state
+
+  private
+
+  def spotify_client
+    @spotify_client ||= ::Spotify.new(current_user)
+  end
 end
