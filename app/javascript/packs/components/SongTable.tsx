@@ -18,7 +18,7 @@ const BodyCell = styled.td<{ hover?: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: background 60ms ease-in, color 60ms ease-in;
+  transition: background 60ms ease-out, color 60ms ease-out;
   padding: ${PADDING};
 
   ${({ hover }) => hover && bodyHoverStyles}

@@ -88,6 +88,6 @@ export interface Track {
   uri: SpotifyUri
   name: string
   artist: Artist
-  album: Album
   duration: number
+  album?: Album
 }
