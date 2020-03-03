@@ -2,7 +2,7 @@ import * as React from 'react'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { AlbumDetail, SpotifyUri, Album } from '../types'
+import { AlbumDetail } from '../types'
 import { numberCachedAlbums } from '../constants'
 import { State } from '../store'
 import { useApiRequests } from '../lib/apiHelpers'
