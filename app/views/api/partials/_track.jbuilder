@@ -6,6 +6,8 @@ json.artist do
   json.partial! 'api/partials/artist', artist: track['artists'].first
 end
 
-json.album do
-  json.partial! 'api/partials/album', album: track['album']
+if track['album'].present?
+  json.album do
+    json.partial! 'api/partials/album', album: track['album']
+  end
 end
