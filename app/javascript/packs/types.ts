@@ -6,6 +6,9 @@ declare global {
         collections: {
           defaultCollection: ApiCollection
         }
+        albums?: {
+          albums: AlbumDetail[]
+        }
       }
       clear: () => undefined
     }
@@ -17,6 +20,10 @@ export interface Album {
   name: string
   artist: Artist
   images: SpotifyImages
+}
+
+export type AlbumDetail = Album & {
+  tracks: Track[]
 }
 
 export interface ApiCollection {
@@ -84,6 +91,6 @@ export interface Track {
   uri: SpotifyUri
   name: string
   artist: Artist
-  album: Album
   duration: number
+  album?: Album
 }

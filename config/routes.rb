@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   authenticated :user do
     root to: 'home#index', as: :authenticated_root
     get '/collection', to: 'home#index'
+    get '/album/:album_id', to: 'home#index'
   end
 
   root to: redirect('/login')
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
   namespace :api do
     get '/me', to: 'users#me'
     get '/search', to: 'search#show'
+    get '/album/:spotify_id', to: 'albums#show'
     resource :player, only: [:show, :update]
     resource :collection, only: [:show, :update]
   end
